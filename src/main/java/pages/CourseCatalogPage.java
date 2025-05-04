@@ -10,7 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CourseCatalogPage {
@@ -19,7 +21,6 @@ public class CourseCatalogPage {
     private final WebDriverWait wait;
 
     private final String url = "https://otus.ru/catalog/courses";
-
     private final By courseCardsSelector = By.cssSelector("a.sc-zzdkm7-0");
     private final By cookieBannerOkButton = By.xpath("//button[text()='OK']");
 
@@ -80,5 +81,22 @@ public class CourseCatalogPage {
 
     private List<WebElement> getCourseCardElements() {
         return driver.findElements(courseCardsSelector);
+    }
+
+    public List<CourseCardComponent> getAllCourseCardsWithDates() {
+        return getCourseCardElements().stream()
+                .map(element -> new CourseCardComponent(driver, element))
+                .filter(card -> card.tryGetStartDate().isPresent())
+                .collect(Collectors.toList());
+    }
+
+    public Optional<CourseCardComponent> getEarliestCourse() {
+        return getAllCourseCardsWithDates().stream()
+                .min(Comparator.comparing(card -> card.tryGetStartDate().get()));
+    }
+
+    public Optional<CourseCardComponent> getLatestCourse() {
+        return getAllCourseCardsWithDates().stream()
+                .max(Comparator.comparing(card -> card.tryGetStartDate().get()));
     }
 }

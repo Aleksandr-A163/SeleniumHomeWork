@@ -2,6 +2,7 @@ package scenarios;
 
 import base.BaseTest;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.CourseCatalogPage;
 import pages.CoursePage;
@@ -13,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Проверка перехода на случайную страницу курса")
+@Tag("search")
 public class CourseSearchTest extends BaseTest {
 
     @Test
+
     public void shouldFindAndOpenRandomCourse() {
         // Заранее заданный список курсов для выбора
         List<String> courseNames = List.of(
