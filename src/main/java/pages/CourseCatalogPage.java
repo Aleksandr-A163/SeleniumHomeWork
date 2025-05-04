@@ -1,0 +1,84 @@
+package pages;
+
+import components.CourseCardComponent;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class CourseCatalogPage {
+
+    private final WebDriver driver;
+    private final WebDriverWait wait;
+
+    private final String url = "https://otus.ru/catalog/courses";
+
+    private final By courseCardsSelector = By.cssSelector("a.sc-zzdkm7-0");
+    private final By cookieBannerOkButton = By.xpath("//button[text()='OK']");
+
+    public CourseCatalogPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public void open() {
+        driver.get(url);
+        acceptCookiesIfPresent();
+        waitForCardsToLoad();
+    }
+
+    private void acceptCookiesIfPresent() {
+        try {
+            WebElement okButton = wait.until(ExpectedConditions.presenceOfElementLocated(cookieBannerOkButton));
+            if (okButton.isDisplayed()) {
+                try {
+                    okButton.click();
+                } catch (Exception e) {
+                    System.out.println("Клик по OK в cookie-баннере перехвачен, используем JS.");
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButton);
+                }
+            }
+        } catch (TimeoutException e) {
+            System.out.println("Cookie-баннер не появился.");
+        }
+    }
+
+    private void waitForCardsToLoad() {
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(courseCardsSelector));
+    }
+
+    public boolean isOpened() {
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(courseCardsSelector));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public List<String> getAllCourseTitles() {
+        return getCourseCardElements().stream()
+                .map(element -> new CourseCardComponent(driver, element))
+                .map(CourseCardComponent::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    public void clickOnCourseByName(String courseName) {
+        getCourseCardElements().stream()
+                .map(element -> new CourseCardComponent(driver, element))
+                .filter(card -> card.getTitle().equalsIgnoreCase(courseName))
+                .findFirst()
+                .ifPresent(CourseCardComponent::click);
+    }
+
+    private List<WebElement> getCourseCardElements() {
+        return driver.findElements(courseCardsSelector);
+    }
+}
