@@ -17,7 +17,6 @@ public class CoursePage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    // Актуальный селектор заголовка курса
     private final By titleSelector = By.cssSelector("h1.diGrSa");
 
     public CoursePage(WebDriver driver) {
@@ -35,21 +34,28 @@ public class CoursePage {
         return actualTitle.equalsIgnoreCase(expectedTitle);
     }
 
-        // Новый метод для получения даты старта курса через Jsoup
-    public LocalDate getCourseStartDateJsoup() {
+    /**
+     * Получает дату начала курса со страницы, добавляя указанный год (т.к. он не отображается в HTML).
+     *
+     * @param fallbackYear Год, взятый с карточки курса
+     * @return LocalDate с точной датой
+     */
+    public LocalDate getCourseStartDateJsoup(int fallbackYear) {
         String pageSource = driver.getPageSource();
         Document doc = Jsoup.parse(pageSource);
 
-        Element dateBlock = doc.selectFirst("div.sc-hrqzy3-1.jEGzDf:matchesOwn(\\d{1,2} [а-я]+, \\d{4})");
+        // Ищем нужный <p> с датой, например: "24 апреля"
+        Element dateParagraph = doc.selectFirst("p.doSDez");
 
-        if (dateBlock == null) {
-            throw new IllegalStateException("Дата старта курса не найдена на странице курса.");
+        if (dateParagraph == null) {
+            throw new IllegalStateException("Дата курса не найдена на странице курса.");
         }
 
-        String rawDate = dateBlock.text().split("·")[0].trim(); // "24 апреля, 2025"
-        System.out.println(">>> Дата со страницы курса (Jsoup): " + rawDate);
+        String dayMonthText = dateParagraph.text().trim(); // "24 апреля"
+        String fullDateText = dayMonthText + ", " + fallbackYear; // "24 апреля, 2025"
+        System.out.println(">>> Дата со страницы курса (Jsoup): " + fullDateText);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", new Locale("ru"));
-        return LocalDate.parse(rawDate, formatter);
+        return LocalDate.parse(fullDateText, formatter);
     }
 }

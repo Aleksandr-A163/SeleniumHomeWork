@@ -64,6 +64,10 @@ public class CourseCatalogPage {
         }
     }
 
+    private List<WebElement> getCourseCardElements() {
+        return driver.findElements(courseCardsSelector);
+    }
+
     public List<String> getAllCourseTitles() {
         return getCourseCardElements().stream()
                 .map(element -> new CourseCardComponent(driver, element))
@@ -77,10 +81,6 @@ public class CourseCatalogPage {
                 .filter(card -> card.getTitle().equalsIgnoreCase(courseName))
                 .findFirst()
                 .ifPresent(CourseCardComponent::click);
-    }
-
-    private List<WebElement> getCourseCardElements() {
-        return driver.findElements(courseCardsSelector);
     }
 
     public List<CourseCardComponent> getAllCourseCardsWithDates() {
@@ -98,5 +98,9 @@ public class CourseCatalogPage {
     public Optional<CourseCardComponent> getLatestCourse() {
         return getAllCourseCardsWithDates().stream()
                 .max(Comparator.comparing(card -> card.tryGetStartDate().get()));
+    }
+
+    public void waitForCoursesToBeVisible() {
+    wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("a[class*='sc-zzdkm7-0']")));
     }
 }

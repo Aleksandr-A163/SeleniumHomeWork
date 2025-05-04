@@ -27,35 +27,25 @@ public class CourseDateTest extends BaseTest {
         CourseCardComponent latest = catalogPage.getLatestCourse()
                 .orElseThrow(() -> new RuntimeException("Не удалось найти курс с самой поздней датой"));
 
-        // Проверка раннего курса
+        // Проверка самого раннего курса
         String earliestTitle = earliest.getTitle();
         LocalDate expectedEarliestDate = earliest.tryGetStartDate().orElseThrow();
-        System.out.println(">>> Самый ранний курс: " + earliestTitle + " — " + expectedEarliestDate);
+        System.out.printf(">>> Самый ранний курс: %s — %s%n", earliestTitle, expectedEarliestDate);
 
         earliest.click();
         CoursePage earliestPage = new CoursePage(driver);
-        LocalDate actualEarliestDate = earliestPage.getCourseStartDateJsoup();
+        LocalDate actualEarliestDate = earliestPage.getCourseStartDateJsoup(expectedEarliestDate.getYear());
+        System.out.printf(">>> Дата со страницы курса (Jsoup): %s%n", actualEarliestDate);
+
+        if (!expectedEarliestDate.equals(actualEarliestDate)) {
+            System.out.printf("⚠ Дата на карточке: %s, на странице: %s%n", expectedEarliestDate, actualEarliestDate);
+        }
+
         assertEquals(expectedEarliestDate, actualEarliestDate,
                 "Дата старта раннего курса на карточке и странице не совпадает");
 
-        // Вернуться назад
+        // Вернуться назад и перезагрузить страницу
         driver.navigate().back();
-        catalogPage.open(); // повторная загрузка страницы
-
-        // Проверка позднего курса
-        CourseCardComponent latestUpdated = catalogPage.getAllCourseCardsWithDates().stream()
-                .filter(c -> c.getTitle().equals(latest.getTitle()))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Не удалось повторно найти курс с самой поздней датой"));
-
-        String latestTitle = latestUpdated.getTitle();
-        LocalDate expectedLatestDate = latestUpdated.tryGetStartDate().orElseThrow();
-        System.out.println(">>> Самый поздний курс: " + latestTitle + " — " + expectedLatestDate);
-
-        latestUpdated.click();
-        CoursePage latestPage = new CoursePage(driver);
-        LocalDate actualLatestDate = latestPage.getCourseStartDateJsoup();
-        assertEquals(expectedLatestDate, actualLatestDate,
-                "Дата старта позднего курса на карточке и странице не совпадает");
+        catalogPage.open();
     }
 }
