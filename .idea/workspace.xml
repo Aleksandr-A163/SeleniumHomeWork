@@ -9,7 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="added readme info and cleaning">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/di/GuiceExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/di/GuiceExtension.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/di/TestModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/di/TestModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/driver/WebDriverProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/driver/WebDriverProvider.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +82,7 @@
     "settings.editor.selected.configurable": "advanced.settings"
   }
 }]]></component>
-  <component name="RunManager" selected="Gradle.CourseSearchTest">
+  <component name="RunManager" selected="Gradle.SeleniumHomeWork [test]">
     <configuration name="CourseDateTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -199,10 +203,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.SeleniumHomeWork [test]" />
+        <item itemvalue="Gradle.NavigationMenuTest" />
         <item itemvalue="Gradle.CourseSearchTest" />
         <item itemvalue="Gradle.CourseDateTest" />
-        <item itemvalue="Gradle.NavigationMenuTest" />
-        <item itemvalue="Gradle.SeleniumHomeWork [test]" />
         <item itemvalue="Gradle.CourseSearchTest.shouldFindAndOpenRandomCourse" />
       </list>
     </recent_temporary>
@@ -328,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746452578541</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added readme info and cleaning">
+      <option name="closed" value="true" />
+      <created>1746452651438</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1746452651438</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

@@ -9,12 +9,13 @@
 ```
 src/
 ├─ main/java/
-│  ├─ components/        # Web-компоненты (CourseList, CookieBanner, HeaderMenu)
-│  ├─ di/             # Page Object классы (MainPage, CourseCatalogPage, CoursePage)
-│  ├─ pages/            # Создание WebDriver с HighlightingListener
-│  └─ utils/                # Guice-модуль и GuiceExtension
+│  ├─ components/    # Web‑компоненты (CourseListComponent, CookieBannerComponent, HeaderMenuComponent)
+│  ├─ pages/         # Page Object классы (MainPage, CourseCatalogPage, CoursePage)
+│  ├─ driver/        # Фабрика WebDriver (WebDriverProvider, WebDriverFactory)
+│  ├─ di/            # Guice‑модуль (TestModule) и расширение (GuiceExtension)
+│  └─ utils/         # Вспомогательные утилиты (HighlightingListener)
 └─ test/java/
-   └─ scenarios/         # Сценарии тестов
+   └─ scenarios/     # Сценарии тестов (CourseSearchTest, CourseDateTest, CourseCategoryTest)
 ```
 
 ---
@@ -25,7 +26,6 @@ src/
 
    ```bash
    git clone <https://github.com/Aleksandr-A163/SeleniumHomeWork>
-   cd проект
    ```
 
 2. **Запустить все тесты**
