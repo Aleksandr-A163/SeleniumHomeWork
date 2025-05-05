@@ -8,14 +8,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="fixed CourseDateTest for all courses">
+    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="added runners and GuiceExtension">
+      <change afterPath="$PROJECT_DIR$/src/main/java/driver/WebDriverProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/di/TestModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/di/TestModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pages/CourseCatalogPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pages/CourseCatalogPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pages/CoursePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pages/CoursePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pages/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/di/GuiceExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/scenarios/CourseDateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/scenarios/CourseDateTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/scenarios/CourseSearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/scenarios/CourseSearchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ElementHighlighterListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/HighlightingListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +288,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746437940225</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added runners and GuiceExtension">
+      <option name="closed" value="true" />
+      <created>1746443773139</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746443773139</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -302,7 +307,8 @@
     <MESSAGE value="added CourseDateTest" />
     <MESSAGE value="fixed CourseDateTest for earliest course" />
     <MESSAGE value="fixed CourseDateTest for all courses" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed CourseDateTest for all courses" />
+    <MESSAGE value="added runners and GuiceExtension" />
+    <option name="LAST_COMMIT_MESSAGE" value="added runners and GuiceExtension" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SeleniumHomeWork$CourseSearchTest_shouldFindAndOpenRandomCourse.ic" NAME="CourseSearchTest.shouldFindAndOpenRandomCourse Coverage Results" MODIFIED="1746391978113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
