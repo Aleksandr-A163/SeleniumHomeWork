@@ -1,10 +1,13 @@
 package scenarios;
 
-import base.BaseTest;
 import components.CourseCardComponent;
+import com.google.inject.Inject;
+import di.GuiceExtension;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.openqa.selenium.WebDriver;
 import pages.CourseCatalogPage;
 import pages.CoursePage;
 
@@ -15,11 +18,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Проверка самого раннего и самого позднего курсов по дате начала")
 @Tag("data")
-public class CourseDateTest extends BaseTest {
+@ExtendWith(GuiceExtension.class)
+public class CourseDateTest {
+
+    @Inject
+    private WebDriver driver;
+
+    @Inject
+    private CourseCatalogPage catalogPage;
+
+    @Inject
+    private CoursePage coursePage;
 
     @Test
     public void shouldVerifyEarliestAndLatestCourseDates() {
-        CourseCatalogPage catalogPage = new CourseCatalogPage(driver);
+        // Открываем каталог курсов
         catalogPage.open();
 
         // 1. Собираем все курсы с датами
@@ -54,8 +67,7 @@ public class CourseDateTest extends BaseTest {
             System.out.printf(">>> Проверяем ранний курс '%s' — %s%n", title, minDate);
             catalogPage.clickOnCourseByName(title);
 
-            CoursePage page = new CoursePage(driver);
-            LocalDate actual = page.getCourseStartDateJsoup(minDate.getYear());
+            LocalDate actual = coursePage.getCourseStartDateJsoup(minDate.getYear());
             System.out.printf(">>> Дата со страницы курса: %s%n", actual);
 
             assertEquals(minDate, actual,
@@ -70,8 +82,7 @@ public class CourseDateTest extends BaseTest {
             System.out.printf(">>> Проверяем поздний курс '%s' — %s%n", title, maxDate);
             catalogPage.clickOnCourseByName(title);
 
-            CoursePage page = new CoursePage(driver);
-            LocalDate actual = page.getCourseStartDateJsoup(maxDate.getYear());
+            LocalDate actual = coursePage.getCourseStartDateJsoup(maxDate.getYear());
             System.out.printf(">>> Дата со страницы курса: %s%n", actual);
 
             assertEquals(maxDate, actual,

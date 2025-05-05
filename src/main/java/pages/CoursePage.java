@@ -1,5 +1,6 @@
 package pages;
 
+import com.google.inject.Inject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,13 +23,16 @@ public class CoursePage {
     // Новый селектор для <p> с днём и месяцем
     private static final String DATE_P_SELECTOR = "p.sc-1x9oq14-0.sc-3cb1l3-0.doSDez.dgWykw";
 
+    @Inject
     public CoursePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
     public String getCourseTitle() {
-        WebElement titleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(titleSelector));
+        WebElement titleElement = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(titleSelector)
+        );
         return titleElement.getText().trim();
     }
 
@@ -54,7 +58,9 @@ public class CoursePage {
         // Ищем именно <p> с днём и месяцем
         Element dateElement = doc.selectFirst(DATE_P_SELECTOR);
         if (dateElement == null) {
-            throw new IllegalStateException("Тег даты старта курса не найден: " + DATE_P_SELECTOR);
+            throw new IllegalStateException(
+                "Тег даты старта курса не найден: " + DATE_P_SELECTOR
+            );
         }
 
         String dayMonth = dateElement.text().trim();          // например "24 апреля"

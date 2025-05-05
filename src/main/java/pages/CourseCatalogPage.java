@@ -1,5 +1,6 @@
 package pages;
 
+import com.google.inject.Inject;
 import components.CourseCardComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -24,6 +25,7 @@ public class CourseCatalogPage {
     private final By courseCardsSelector = By.cssSelector("a.sc-zzdkm7-0");
     private final By cookieBannerOkButton = By.xpath("//button[text()='OK']");
 
+    @Inject
     public CourseCatalogPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -37,7 +39,9 @@ public class CourseCatalogPage {
 
     private void acceptCookiesIfPresent() {
         try {
-            WebElement okButton = wait.until(ExpectedConditions.presenceOfElementLocated(cookieBannerOkButton));
+            WebElement okButton = wait.until(
+                ExpectedConditions.presenceOfElementLocated(cookieBannerOkButton)
+            );
             if (okButton.isDisplayed()) {
                 try {
                     okButton.click();
@@ -71,35 +75,37 @@ public class CourseCatalogPage {
 
     public List<String> getAllCourseTitles() {
         return getCourseCardElements().stream()
-                .map(element -> new CourseCardComponent(driver, element))
-                .map(CourseCardComponent::getTitle)
-                .collect(Collectors.toList());
+            .map(element -> new CourseCardComponent(driver, element))
+            .map(CourseCardComponent::getTitle)
+            .collect(Collectors.toList());
     }
 
     public void clickOnCourseByName(String courseName) {
         getCourseCardElements().stream()
-                .map(element -> new CourseCardComponent(driver, element))
-                .filter(card -> card.getTitle().equalsIgnoreCase(courseName))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Курс с названием '" + courseName + "' не найден"))
-                .click();
+            .map(element -> new CourseCardComponent(driver, element))
+            .filter(card -> card.getTitle().equalsIgnoreCase(courseName))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException(
+                "Курс с названием '" + courseName + "' не найден"
+            ))
+            .click();
     }
 
     public List<CourseCardComponent> getAllCourseCardsWithDates() {
         return getCourseCardElements().stream()
-                .map(element -> new CourseCardComponent(driver, element))
-                .filter(card -> card.tryGetStartDate().isPresent())
-                .collect(Collectors.toList());
+            .map(element -> new CourseCardComponent(driver, element))
+            .filter(card -> card.tryGetStartDate().isPresent())
+            .collect(Collectors.toList());
     }
 
     public Optional<CourseCardComponent> getEarliestCourse() {
         return getAllCourseCardsWithDates().stream()
-                .min(Comparator.comparing(card -> card.tryGetStartDate().get()));
+            .min(Comparator.comparing(card -> card.tryGetStartDate().get()));
     }
 
     public Optional<CourseCardComponent> getLatestCourse() {
         return getAllCourseCardsWithDates().stream()
-                .max(Comparator.comparing(card -> card.tryGetStartDate().get()));
+            .max(Comparator.comparing(card -> card.tryGetStartDate().get()));
     }
 
     /**

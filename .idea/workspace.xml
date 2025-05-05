@@ -8,12 +8,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="fixed CourseDateTest for earliest course">
+    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="fixed CourseDateTest for all courses">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/components/CourseCardComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/CourseCardComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/di/TestModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/di/TestModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pages/CourseCatalogPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pages/CourseCatalogPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pages/CoursePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pages/CoursePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pages/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/di/GuiceExtension.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/scenarios/CourseDateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/scenarios/CourseDateTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/scenarios/CourseSearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/scenarios/CourseSearchTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746402285698</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixed CourseDateTest for all courses">
+      <option name="closed" value="true" />
+      <created>1746437940225</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746437940225</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -291,18 +301,8 @@
     <MESSAGE value="added full files structure" />
     <MESSAGE value="added CourseDateTest" />
     <MESSAGE value="fixed CourseDateTest for earliest course" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed CourseDateTest for earliest course" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/di/TestModule.java</url>
-          <line>13</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="fixed CourseDateTest for all courses" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed CourseDateTest for all courses" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SeleniumHomeWork$CourseSearchTest_shouldFindAndOpenRandomCourse.ic" NAME="CourseSearchTest.shouldFindAndOpenRandomCourse Coverage Results" MODIFIED="1746391978113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
