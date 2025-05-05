@@ -8,11 +8,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="added runners and GuiceExtension">
-      <change afterPath="$PROJECT_DIR$/src/main/java/driver/WebDriverProvider.java" afterDir="false" />
+    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="added color frame and rewrite  webdriver">
+      <change afterPath="$PROJECT_DIR$/src/main/java/pages/MainPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/components/HeaderMenuComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/components/HeaderMenuComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/di/TestModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/di/TestModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ElementHighlighterListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/HighlightingListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/driver/WebDriverProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/driver/WebDriverProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/scenarios/NavigationMenuTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/scenarios/NavigationMenuTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,29 +60,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build Selenium.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CourseDateTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CourseSearchTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CourseSearchTest.shouldFindAndOpenRandomCourse.executor&quot;: &quot;Coverage&quot;,
-    &quot;Gradle.SampleTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Selenium.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.SeleniumHomeWork [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Tests in 'SeleniumHomeWork'.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/alexx/IdeaProjects/Allure-Reports&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/alexx/IdeaProjects/SeleniumHomeWork/Selenium/src/main/java/selenium_tests/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Selenium.executor": "Run",
+    "Gradle.CourseDateTest.executor": "Run",
+    "Gradle.CourseSearchTest.executor": "Run",
+    "Gradle.CourseSearchTest.shouldFindAndOpenRandomCourse.executor": "Coverage",
+    "Gradle.NavigationMenuTest.executor": "Run",
+    "Gradle.SampleTest.executor": "Run",
+    "Gradle.Selenium.executor": "Run",
+    "Gradle.SeleniumHomeWork [test].executor": "Run",
+    "Gradle.Tests in 'SeleniumHomeWork'.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/alexx/IdeaProjects/Allure-Reports",
+    "onboarding.tips.debug.path": "C:/Users/alexx/IdeaProjects/SeleniumHomeWork/Selenium/src/main/java/selenium_tests/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "advanced.settings"
   }
-}</component>
-  <component name="RunManager" selected="Gradle.CourseDateTest">
+}]]></component>
+  <component name="RunManager" selected="Gradle.NavigationMenuTest">
     <configuration name="CourseDateTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -153,6 +156,30 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="NavigationMenuTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;scenarios.NavigationMenuTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="SeleniumHomeWork [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -175,35 +202,13 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Tests in 'SeleniumHomeWork'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.NavigationMenuTest" />
         <item itemvalue="Gradle.CourseDateTest" />
         <item itemvalue="Gradle.CourseSearchTest" />
         <item itemvalue="Gradle.SeleniumHomeWork [test]" />
         <item itemvalue="Gradle.CourseSearchTest.shouldFindAndOpenRandomCourse" />
-        <item itemvalue="Gradle.Tests in 'SeleniumHomeWork'" />
       </list>
     </recent_temporary>
   </component>
@@ -296,7 +301,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746443773139</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="added color frame and rewrite  webdriver">
+      <option name="closed" value="true" />
+      <created>1746446084960</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746446084960</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -308,7 +321,8 @@
     <MESSAGE value="fixed CourseDateTest for earliest course" />
     <MESSAGE value="fixed CourseDateTest for all courses" />
     <MESSAGE value="added runners and GuiceExtension" />
-    <option name="LAST_COMMIT_MESSAGE" value="added runners and GuiceExtension" />
+    <MESSAGE value="added color frame and rewrite  webdriver" />
+    <option name="LAST_COMMIT_MESSAGE" value="added color frame and rewrite  webdriver" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SeleniumHomeWork$CourseSearchTest_shouldFindAndOpenRandomCourse.ic" NAME="CourseSearchTest.shouldFindAndOpenRandomCourse Coverage Results" MODIFIED="1746391978113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
