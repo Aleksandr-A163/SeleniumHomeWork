@@ -1,6 +1,5 @@
 package scenarios;
 
-import components.CourseCardComponent;
 import com.google.inject.Inject;
 import di.GuiceExtension;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,6 @@ import pages.CourseCatalogPage;
 import pages.CoursePage;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,75 +19,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(GuiceExtension.class)
 public class CourseDateTest {
 
-    @Inject
-    private WebDriver driver;
-
-    @Inject
-    private CourseCatalogPage catalogPage;
-
-    @Inject
-    private CoursePage coursePage;
+    @Inject private WebDriver      driver;
+    @Inject private CourseCatalogPage catalog;
+    @Inject private CoursePage     course;
 
     @Test
-    public void shouldVerifyEarliestAndLatestCourseDates() {
-        // Открываем каталог курсов
-        catalogPage.open();
+    void shouldVerifyEarliestAndLatestCourseDates() {
+        catalog.open();
 
-        // 1. Собираем все курсы с датами
-        List<CourseCardComponent> allCards = catalogPage.getAllCourseCardsWithDates();
+        // Находим самую раннюю дату и проверяем все её курсы
+        verifyCoursesForDate(catalog.getEarliestCourseDate());
 
-        if (allCards.isEmpty()) {
-            throw new RuntimeException("Не найдено ни одной карточки с датой старта");
-        }
+        // Аналогично для самой поздней
+        verifyCoursesForDate(catalog.getLatestCourseDate());
+    }
 
-        // 2. Находим самую раннюю и самую позднюю дату
-        LocalDate minDate = allCards.stream()
-                .map(c -> c.tryGetStartDate().orElseThrow())
-                .min(LocalDate::compareTo)
-                .orElseThrow();
-        LocalDate maxDate = allCards.stream()
-                .map(c -> c.tryGetStartDate().orElseThrow())
-                .max(LocalDate::compareTo)
-                .orElseThrow();
+    private void verifyCoursesForDate(LocalDate date) {
+        for (String title : catalog.getCourseTitlesByDate(date)) {
+            catalog.clickOnCourseByName(title);
 
-        // 3. Находим названия курсов с этими датами
-        List<String> earliestTitles = allCards.stream()
-                .filter(c -> c.tryGetStartDate().orElseThrow().equals(minDate))
-                .map(CourseCardComponent::getTitle)
-                .toList();
-        List<String> latestTitles = allCards.stream()
-                .filter(c -> c.tryGetStartDate().orElseThrow().equals(maxDate))
-                .map(CourseCardComponent::getTitle)
-                .toList();
-
-        // 4. Для каждого самого раннего курса: клик по названию, проверка даты, возврат назад
-        for (String title : earliestTitles) {
-            System.out.printf(">>> Проверяем ранний курс '%s' — %s%n", title, minDate);
-            catalogPage.clickOnCourseByName(title);
-
-            LocalDate actual = coursePage.getCourseStartDateJsoup(minDate.getYear());
-            System.out.printf(">>> Дата со страницы курса: %s%n", actual);
-
-            assertEquals(minDate, actual,
-                String.format("Ранний курс '%s': ожидали %s, получили %s", title, minDate, actual));
+            LocalDate actual = course.getCourseStartDateJsoup(date.getYear());
+            assertEquals(
+                date, actual,
+                String.format("Курс '%s': ожидали %s, получили %s", title, date, actual)
+            );
 
             driver.navigate().back();
-            catalogPage.waitForCoursesToBeVisible();
-        }
-
-        // 5. Для каждого самого позднего курса: аналогично
-        for (String title : latestTitles) {
-            System.out.printf(">>> Проверяем поздний курс '%s' — %s%n", title, maxDate);
-            catalogPage.clickOnCourseByName(title);
-
-            LocalDate actual = coursePage.getCourseStartDateJsoup(maxDate.getYear());
-            System.out.printf(">>> Дата со страницы курса: %s%n", actual);
-
-            assertEquals(maxDate, actual,
-                String.format("Поздний курс '%s': ожидали %s, получили %s", title, maxDate, actual));
-
-            driver.navigate().back();
-            catalogPage.waitForCoursesToBeVisible();
+            catalog.waitForCoursesToBeVisible();
         }
     }
 }

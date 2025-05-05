@@ -1,118 +1,91 @@
 package pages;
 
 import com.google.inject.Inject;
+import components.CookieBannerComponent;
+import components.CourseListComponent;
 import components.CourseCardComponent;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.Comparator;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Page Object для страницы каталога курсов.
+ * Делегирует логику работы с баннером и списком карточек соответствующим компонентам.
+ */
 public class CourseCatalogPage {
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
+    private static final String URL = "https://otus.ru/catalog/courses";
 
-    private final String url = "https://otus.ru/catalog/courses";
-    private final By courseCardsSelector = By.cssSelector("a.sc-zzdkm7-0");
-    private final By cookieBannerOkButton = By.xpath("//button[text()='OK']");
+    private final WebDriver driver;
+    private final CookieBannerComponent cookieBanner;
+    private final CourseListComponent courseList;
 
     @Inject
-    public CourseCatalogPage(WebDriver driver) {
+    public CourseCatalogPage(WebDriver driver,
+                              CookieBannerComponent cookieBanner,
+                              CourseListComponent courseList) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.cookieBanner = cookieBanner;
+        this.courseList = courseList;
     }
 
+    /** Открывает страницу каталога и ждёт загрузки карточек */
     public void open() {
-        driver.get(url);
-        acceptCookiesIfPresent();
-        waitForCardsToLoad();
+        driver.get(URL);
+        cookieBanner.acceptIfPresent();
+        courseList.waitForReady();
     }
 
-    private void acceptCookiesIfPresent() {
-        try {
-            WebElement okButton = wait.until(
-                ExpectedConditions.presenceOfElementLocated(cookieBannerOkButton)
-            );
-            if (okButton.isDisplayed()) {
-                try {
-                    okButton.click();
-                } catch (Exception e) {
-                    System.out.println("Клик по OK в cookie-баннере перехвачен, используем JS.");
-                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButton);
-                }
-            }
-        } catch (TimeoutException e) {
-            System.out.println("Cookie-баннер не появился.");
-        }
-    }
-
-    private void waitForCardsToLoad() {
-        // ждём, пока хотя бы одно появится в DOM
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(courseCardsSelector));
-    }
-
+    /** Проверяет, что на странице отображены карточки курсов */
     public boolean isOpened() {
-        try {
-            wait.until(ExpectedConditions.presenceOfElementLocated(courseCardsSelector));
-            return true;
-        } catch (TimeoutException e) {
-            return false;
-        }
+        courseList.waitForReady();
+        return !courseList.getAllCards().isEmpty();
     }
 
-    private List<WebElement> getCourseCardElements() {
-        return driver.findElements(courseCardsSelector);
-    }
-
+    /** Возвращает все заголовки курсов */
     public List<String> getAllCourseTitles() {
-        return getCourseCardElements().stream()
-            .map(element -> new CourseCardComponent(driver, element))
-            .map(CourseCardComponent::getTitle)
-            .collect(Collectors.toList());
+        return courseList.getAllTitles();
     }
 
-    public void clickOnCourseByName(String courseName) {
-        getCourseCardElements().stream()
-            .map(element -> new CourseCardComponent(driver, element))
-            .filter(card -> card.getTitle().equalsIgnoreCase(courseName))
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException(
-                "Курс с названием '" + courseName + "' не найден"
-            ))
-            .click();
+    /** Кликает по курсу с указанным названием */
+    public void clickOnCourseByName(String name) {
+        courseList.clickByName(name);
     }
 
+    /** Возвращает список карточек, у которых есть дата старта */
     public List<CourseCardComponent> getAllCourseCardsWithDates() {
-        return getCourseCardElements().stream()
-            .map(element -> new CourseCardComponent(driver, element))
-            .filter(card -> card.tryGetStartDate().isPresent())
+        return courseList.getCardsWithDates();
+    }
+
+    /** Находит самую раннюю дату старта среди карточек */
+    public LocalDate getEarliestCourseDate() {
+        return getAllCourseCardsWithDates().stream()
+            .map(c -> c.tryGetStartDate().orElseThrow())
+            .min(LocalDate::compareTo)
+            .orElseThrow();
+    }
+
+    /** Находит самую позднюю дату старта среди карточек */
+    public LocalDate getLatestCourseDate() {
+        return getAllCourseCardsWithDates().stream()
+            .map(c -> c.tryGetStartDate().orElseThrow())
+            .max(LocalDate::compareTo)
+            .orElseThrow();
+    }
+
+    /** Возвращает заголовки курсов, которые стартуют в заданную дату */
+    public List<String> getCourseTitlesByDate(LocalDate date) {
+        return getAllCourseCardsWithDates().stream()
+            .filter(c -> c.tryGetStartDate().orElseThrow().equals(date))
+            .map(CourseCardComponent::getTitle)
+            .distinct()
             .collect(Collectors.toList());
     }
 
-    public Optional<CourseCardComponent> getEarliestCourse() {
-        return getAllCourseCardsWithDates().stream()
-            .min(Comparator.comparing(card -> card.tryGetStartDate().get()));
-    }
-
-    public Optional<CourseCardComponent> getLatestCourse() {
-        return getAllCourseCardsWithDates().stream()
-            .max(Comparator.comparing(card -> card.tryGetStartDate().get()));
-    }
-
-    /**
-     * Смена реализации: теперь ждём именно ПРИСУТСТВИЕ карточек в DOM,
-     * а не их полную видимость на экране.
-     */
+    /** Ждёт, пока карточки станут доступны в DOM */
     public void waitForCoursesToBeVisible() {
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(courseCardsSelector));
+        courseList.waitForReady();
     }
 }
