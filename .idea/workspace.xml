@@ -8,12 +8,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="added NavigationMenuTest">
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/CookieBannerComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/components/CourseListComponent.java" afterDir="false" />
+    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="separated components">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pages/CourseCatalogPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pages/CourseCatalogPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/scenarios/CourseDateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/scenarios/CourseDateTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/CustomWait.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/JsoupHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +82,7 @@
     "settings.editor.selected.configurable": "advanced.settings"
   }
 }]]></component>
-  <component name="RunManager" selected="Gradle.CourseDateTest">
+  <component name="RunManager" selected="Gradle.CourseSearchTest">
     <configuration name="CourseDateTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -203,9 +203,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CourseSearchTest" />
         <item itemvalue="Gradle.CourseDateTest" />
         <item itemvalue="Gradle.NavigationMenuTest" />
-        <item itemvalue="Gradle.CourseSearchTest" />
         <item itemvalue="Gradle.SeleniumHomeWork [test]" />
         <item itemvalue="Gradle.CourseSearchTest.shouldFindAndOpenRandomCourse" />
       </list>
@@ -316,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746448229889</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="separated components">
+      <option name="closed" value="true" />
+      <created>1746451967791</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1746451967791</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -330,7 +338,8 @@
     <MESSAGE value="added runners and GuiceExtension" />
     <MESSAGE value="added color frame and rewrite  webdriver" />
     <MESSAGE value="added NavigationMenuTest" />
-    <option name="LAST_COMMIT_MESSAGE" value="added NavigationMenuTest" />
+    <MESSAGE value="separated components" />
+    <option name="LAST_COMMIT_MESSAGE" value="separated components" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SeleniumHomeWork$CourseSearchTest_shouldFindAndOpenRandomCourse.ic" NAME="CourseSearchTest.shouldFindAndOpenRandomCourse Coverage Results" MODIFIED="1746391978113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
