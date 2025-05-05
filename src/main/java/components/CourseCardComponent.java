@@ -2,10 +2,11 @@ package components;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -48,7 +49,18 @@ public class CourseCardComponent {
     }
 
     public void click() {
-        root.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        // дождаться, чтобы элемент стал кликабельным
+        wait.until(ExpectedConditions.elementToBeClickable(root));
+        // скроллим в центр экрана
+        ((JavascriptExecutor) driver).executeScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'center'});", root);
+        try {
+            root.click();
+        } catch (ElementClickInterceptedException e) {
+            System.out.println("Клик по элементу перехвачен, пробуем через JS");
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", root);
+        }
     }
 
     public String getInnerHtml() {

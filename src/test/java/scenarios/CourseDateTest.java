@@ -9,6 +9,7 @@ import pages.CourseCatalogPage;
 import pages.CoursePage;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,31 +22,63 @@ public class CourseDateTest extends BaseTest {
         CourseCatalogPage catalogPage = new CourseCatalogPage(driver);
         catalogPage.open();
 
-        // Получение курсов с самой ранней и самой поздней датой
-        CourseCardComponent earliest = catalogPage.getEarliestCourse()
-                .orElseThrow(() -> new RuntimeException("Не удалось найти курс с самой ранней датой"));
-        CourseCardComponent latest = catalogPage.getLatestCourse()
-                .orElseThrow(() -> new RuntimeException("Не удалось найти курс с самой поздней датой"));
+        // 1. Собираем все курсы с датами
+        List<CourseCardComponent> allCards = catalogPage.getAllCourseCardsWithDates();
 
-        // Проверка самого раннего курса
-        String earliestTitle = earliest.getTitle();
-        LocalDate expectedEarliestDate = earliest.tryGetStartDate().orElseThrow();
-        System.out.printf(">>> Самый ранний курс: %s — %s%n", earliestTitle, expectedEarliestDate);
-
-        earliest.click();
-        CoursePage earliestPage = new CoursePage(driver);
-        LocalDate actualEarliestDate = earliestPage.getCourseStartDateJsoup(expectedEarliestDate.getYear());
-        System.out.printf(">>> Дата со страницы курса (Jsoup): %s%n", actualEarliestDate);
-
-        if (!expectedEarliestDate.equals(actualEarliestDate)) {
-            System.out.printf("⚠ Дата на карточке: %s, на странице: %s%n", expectedEarliestDate, actualEarliestDate);
+        if (allCards.isEmpty()) {
+            throw new RuntimeException("Не найдено ни одной карточки с датой старта");
         }
 
-        assertEquals(expectedEarliestDate, actualEarliestDate,
-                "Дата старта раннего курса на карточке и странице не совпадает");
+        // 2. Находим самую раннюю и самую позднюю дату
+        LocalDate minDate = allCards.stream()
+                .map(c -> c.tryGetStartDate().orElseThrow())
+                .min(LocalDate::compareTo)
+                .orElseThrow();
+        LocalDate maxDate = allCards.stream()
+                .map(c -> c.tryGetStartDate().orElseThrow())
+                .max(LocalDate::compareTo)
+                .orElseThrow();
 
-        // Вернуться назад и перезагрузить страницу
-        driver.navigate().back();
-        catalogPage.open();
+        // 3. Находим названия курсов с этими датами
+        List<String> earliestTitles = allCards.stream()
+                .filter(c -> c.tryGetStartDate().orElseThrow().equals(minDate))
+                .map(CourseCardComponent::getTitle)
+                .toList();
+        List<String> latestTitles = allCards.stream()
+                .filter(c -> c.tryGetStartDate().orElseThrow().equals(maxDate))
+                .map(CourseCardComponent::getTitle)
+                .toList();
+
+        // 4. Для каждого самого раннего курса: клик по названию, проверка даты, возврат назад
+        for (String title : earliestTitles) {
+            System.out.printf(">>> Проверяем ранний курс '%s' — %s%n", title, minDate);
+            catalogPage.clickOnCourseByName(title);
+
+            CoursePage page = new CoursePage(driver);
+            LocalDate actual = page.getCourseStartDateJsoup(minDate.getYear());
+            System.out.printf(">>> Дата со страницы курса: %s%n", actual);
+
+            assertEquals(minDate, actual,
+                String.format("Ранний курс '%s': ожидали %s, получили %s", title, minDate, actual));
+
+            driver.navigate().back();
+            catalogPage.waitForCoursesToBeVisible();
+        }
+
+        // 5. Для каждого самого позднего курса: аналогично
+        for (String title : latestTitles) {
+            System.out.printf(">>> Проверяем поздний курс '%s' — %s%n", title, maxDate);
+            catalogPage.clickOnCourseByName(title);
+
+            CoursePage page = new CoursePage(driver);
+            LocalDate actual = page.getCourseStartDateJsoup(maxDate.getYear());
+            System.out.printf(">>> Дата со страницы курса: %s%n", actual);
+
+            assertEquals(maxDate, actual,
+                String.format("Поздний курс '%s': ожидали %s, получили %s", title, maxDate, actual));
+
+            driver.navigate().back();
+            catalogPage.waitForCoursesToBeVisible();
+        }
     }
 }

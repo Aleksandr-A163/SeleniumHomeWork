@@ -17,7 +17,10 @@ public class CoursePage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
+    // Актуальный селектор заголовка курса
     private final By titleSelector = By.cssSelector("h1.diGrSa");
+    // Новый селектор для <p> с днём и месяцем
+    private static final String DATE_P_SELECTOR = "p.sc-1x9oq14-0.sc-3cb1l3-0.doSDez.dgWykw";
 
     public CoursePage(WebDriver driver) {
         this.driver = driver;
@@ -30,32 +33,36 @@ public class CoursePage {
     }
 
     public boolean isCorrectCourseOpened(String expectedTitle) {
-        String actualTitle = getCourseTitle();
-        return actualTitle.equalsIgnoreCase(expectedTitle);
+        return getCourseTitle().equalsIgnoreCase(expectedTitle);
     }
 
     /**
-     * Получает дату начала курса со страницы, добавляя указанный год (т.к. он не отображается в HTML).
+     * Парсит дату старта курса из тега
+     * <p class="sc-1x9oq14-0 sc-3cb1l3-0 doSDez dgWykw">24 апреля</p>
+     * и дополняет годом, переданным в expectedYear.
      *
-     * @param fallbackYear Год, взятый с карточки курса
-     * @return LocalDate с точной датой
+     * @param expectedYear год, который подставляем к дню и месяцу
+     * @return LocalDate собранный из текста <p> и expectedYear
      */
-    public LocalDate getCourseStartDateJsoup(int fallbackYear) {
+    public LocalDate getCourseStartDateJsoup(int expectedYear) {
+        // Ждём, пока <p> появится на странице
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(DATE_P_SELECTOR)));
+
         String pageSource = driver.getPageSource();
         Document doc = Jsoup.parse(pageSource);
 
-        // Ищем нужный <p> с датой, например: "24 апреля"
-        Element dateParagraph = doc.selectFirst("p.doSDez");
-
-        if (dateParagraph == null) {
-            throw new IllegalStateException("Дата курса не найдена на странице курса.");
+        // Ищем именно <p> с днём и месяцем
+        Element dateElement = doc.selectFirst(DATE_P_SELECTOR);
+        if (dateElement == null) {
+            throw new IllegalStateException("Тег даты старта курса не найден: " + DATE_P_SELECTOR);
         }
 
-        String dayMonthText = dateParagraph.text().trim(); // "24 апреля"
-        String fullDateText = dayMonthText + ", " + fallbackYear; // "24 апреля, 2025"
-        System.out.println(">>> Дата со страницы курса (Jsoup): " + fullDateText);
+        String dayMonth = dateElement.text().trim();          // например "24 апреля"
+        String rawDate = String.format("%s, %d", dayMonth, expectedYear);
+        System.out.println(">>> Дата со страницы курса (Jsoup): " + rawDate);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", new Locale("ru"));
-        return LocalDate.parse(fullDateText, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("d MMMM, yyyy", new Locale("ru"));
+        return LocalDate.parse(rawDate, formatter);
     }
 }

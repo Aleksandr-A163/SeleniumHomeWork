@@ -52,6 +52,7 @@ public class CourseCatalogPage {
     }
 
     private void waitForCardsToLoad() {
+        // ждём, пока хотя бы одно появится в DOM
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(courseCardsSelector));
     }
 
@@ -80,7 +81,8 @@ public class CourseCatalogPage {
                 .map(element -> new CourseCardComponent(driver, element))
                 .filter(card -> card.getTitle().equalsIgnoreCase(courseName))
                 .findFirst()
-                .ifPresent(CourseCardComponent::click);
+                .orElseThrow(() -> new RuntimeException("Курс с названием '" + courseName + "' не найден"))
+                .click();
     }
 
     public List<CourseCardComponent> getAllCourseCardsWithDates() {
@@ -100,7 +102,11 @@ public class CourseCatalogPage {
                 .max(Comparator.comparing(card -> card.tryGetStartDate().get()));
     }
 
+    /**
+     * Смена реализации: теперь ждём именно ПРИСУТСТВИЕ карточек в DOM,
+     * а не их полную видимость на экране.
+     */
     public void waitForCoursesToBeVisible() {
-    wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("a[class*='sc-zzdkm7-0']")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(courseCardsSelector));
     }
 }
