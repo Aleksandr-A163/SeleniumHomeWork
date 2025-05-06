@@ -8,9 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="added readme info and cleaning">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="c8e56b1e-395f-4914-803a-ac120f81afa2" name="Changes" comment="added build.gradle" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -336,7 +334,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746452651438</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="added build.gradle">
+      <option name="closed" value="true" />
+      <created>1746547488031</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1746547488031</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -352,7 +358,8 @@
     <MESSAGE value="added NavigationMenuTest" />
     <MESSAGE value="separated components" />
     <MESSAGE value="added readme info and cleaning" />
-    <option name="LAST_COMMIT_MESSAGE" value="added readme info and cleaning" />
+    <MESSAGE value="added build.gradle" />
+    <option name="LAST_COMMIT_MESSAGE" value="added build.gradle" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SeleniumHomeWork$CourseSearchTest_shouldFindAndOpenRandomCourse.ic" NAME="CourseSearchTest.shouldFindAndOpenRandomCourse Coverage Results" MODIFIED="1746391978113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
