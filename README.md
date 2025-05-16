@@ -2,6 +2,16 @@
 
 Этот проект содержит набор автоматизированных тестов для сайта [otus.ru](https://otus.ru), реализованных с использованием **Java 17**, **Selenium WebDriver 4+**, **JUnit 5**, **Google Guice (DI)** и **Gradle**.
 
+##  :computer: Используемый стек
+
+<p align="center">
+<a href="https://www.jetbrains.com/idea/"><img width="6%" title="IntelliJ IDEA" src="media/logo/Intelij_IDEA.svg"></a>
+<a href="https://www.java.com/"><img width="6%" title="Java" src="media/logo/Java.svg"></a>
+<a href="https://selenide.org/"><img width="6%" title="Selenide" src="media/logo/Selenium.svg"></a>
+<a href="https://gradle.org/"><img width="6%" title="Gradle" src="media/logo/Gradle.svg"></a>
+<a href="https://junit.org/junit5/"><img width="6%" title="JUnit5" src="media/logo/JUnit5.svg"></a>
+</p>
+
 ---
 
 ## 📦 Структура проекта
@@ -9,13 +19,13 @@
 ```
 src/
 ├─ main/java/
-│  ├─ components/    # Web‑компоненты (CourseListComponent, CookieBannerComponent и др.)
-│  ├─ pages/         # Page Object классы (MainPage, CourseCatalogPage, CoursePage)
-│  ├─ driver/        # Фабрика WebDriver (WebDriverProvider, WebDriverFactory)
+│  ├─ components/    # Web‑компоненты (CourseListComponent, CourseCardComponent и др.)
+│  ├─ pages/         # Page Object классы (BasePage, MainPage, CourseCatalogPage, CoursePage)
+│  ├─ driver/        # Фабрика WebDriver (WebDriverProvider, BrowserFactory, BrowserType )
 │  ├─ di/            # Guice‑модуль и расширение (TestModule, GuiceExtension)
-│  └─ utils/         # Утилиты (HighlightingListener и др.)
+│  └─ utils/         # Утилиты (HighlightingListener для подсветки выделяемых объектов)
 └─ test/java/
-   └─ scenarios/     # Тестовые сценарии (CourseSearchTest, CourseDateTest и др.)
+   └─ scenarios/     # Тестовые сценарии (CourseSearchTest, CourseDateTest и NavigationMenutest)
 ```
 
 ---
@@ -55,21 +65,8 @@ src/
 
 ---
 
-## ⚙️ Конфигурация
 
-- Java 17
-- WebDriverManager автоматически загружает драйвера
-- Для корректной работы с кириллицей в консоли добавьте:
-
-  ```
-  org.gradle.jvmargs=-Dfile.encoding=UTF-8
-  ```
-
-  в файл `gradle.properties`.
-
----
-
-## ✅ Реализованные задачи
+## ✅ Реализованные фичи
 
 - **Dependency Injection** через Google Guice: все компоненты и страницы создаются через `@Inject`
 - **JUnit 5 Extension** (`GuiceExtension`) вместо `BaseTest`
@@ -77,29 +74,19 @@ src/
 - **Декоратор WebDriver**: `EventFiringDecorator` для логирования и расширения поведения
 - **Checkstyle + SpotBugs** подключены через Gradle
 - **Page Object + Component Based Design**
-- **Сценарии тестирования**:
-  - Навигация на случайный курс из фиксированного списка
-  - Поиск курса с самой ранней/поздней датой начала (с использованием Stream API и reduce)
-  - Переход на случайную категорию из меню «Обучение» и проверка URL
 
----
+## Сценарии тестирования:
 
-## 📌 Параметры запуска
-
-| Параметр              | Описание                           | Пример                        |
-|------------------------|------------------------------------|-------------------------------|
-| `-Dbrowser=chrome`     | Браузер: chrome, firefox, edge     | `./gradlew test -Dbrowser=firefox` |
-| `-Dfile.encoding=UTF-8`| Правильное отображение кириллицы   | в `gradle.properties`         |
-
+  - CourseSearchTest - Навигация на случайный курс из фиксированного списка
+  - CourseDateTest - Поиск курса с самой ранней/поздней датой начала (с использованием Stream API и reduce)
+  - NavigationMenutest - Переход на случайную категорию из меню «Обучение» и проверка URL
 
 ---
 
 ## 📌 TODO / Планы развития
 
-- [ ] Интеграция с Allure Report
 - [ ] Миграция тестов на Cucumber
-- [ ] Параллельный запуск тестов
-- [ ] Поддержка Docker/CI
+
 
 ---
 
