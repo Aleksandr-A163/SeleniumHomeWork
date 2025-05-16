@@ -20,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(GuiceExtension.class)
 public class CourseSearchTest {
 
-    @Inject
-    private WebDriver driver;
+
     @Inject
     private CourseCatalogPage catalogPage;
     @Inject

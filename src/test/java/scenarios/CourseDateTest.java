@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Проверка самого раннего и самого позднего курсов по дате начала")
+@DisplayName("Проверка самого раннего и самого позднего курсов по дате начала (с использованием reduce)")
 @Tag("data")
 @ExtendWith(GuiceExtension.class)
 public class CourseDateTest {
@@ -28,10 +28,7 @@ public class CourseDateTest {
     void shouldVerifyEarliestAndLatestCourseDates() {
         catalog.open();
 
-        // Находим самую раннюю дату и проверяем все её курсы
         verifyCoursesForDate(catalog.getEarliestCourseDate());
-
-        // Аналогично для самой поздней
         verifyCoursesForDate(catalog.getLatestCourseDate());
     }
 
@@ -45,7 +42,6 @@ public class CourseDateTest {
                 String.format("Курс '%s': ожидали %s, получили %s", title, date, actual)
             );
 
-            // Вместо navigate().back() — переоткрываем каталог
             catalog.open();
         }
     }
