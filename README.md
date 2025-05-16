@@ -7,7 +7,6 @@
 <p align="center">
 <a href="https://www.jetbrains.com/idea/"><img width="6%" title="IntelliJ IDEA" src="media/logo/Intelij_IDEA.svg"></a>
 <a href="https://www.java.com/"><img width="6%" title="Java" src="media/logo/Java.svg"></a>
-<a href="https://selenide.org/"><img width="6%" title="Selenide" src="media/logo/Selenium.svg"></a>
 <a href="https://gradle.org/"><img width="6%" title="Gradle" src="media/logo/Gradle.svg"></a>
 <a href="https://junit.org/junit5/"><img width="6%" title="JUnit5" src="media/logo/JUnit5.svg"></a>
 </p>
