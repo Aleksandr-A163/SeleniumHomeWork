@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -26,39 +25,40 @@ public class CourseCardComponent {
     }
 
     public String getTitle() {
-        try {
-            return root.findElement(titleSelector).getText().trim();
-        } catch (Exception e) {
-            return "";
-        }
+        return root.findElement(titleSelector).getText().trim();
     }
 
     public Optional<LocalDate> tryGetStartDate() {
         try {
+
             String fullText = root.findElement(dateTextSelector).getText().trim();
-            String datePart = fullText.split(" · ")[0];
+            String datePart = fullText.split(" · ")[0].trim();
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", new Locale("ru"));
             return Optional.of(LocalDate.parse(datePart, formatter));
-        } catch (DateTimeParseException e) {
-            System.out.printf("✘ Ошибка при парсинге даты для курса \"%s\": %s%n", getTitle(), e.getMessage());
-            return Optional.empty();
+
         } catch (Exception e) {
-            System.out.printf("✘ Ошибка при парсинге даты для курса \"%s\": %s%n", getTitle(), e.getMessage());
+            System.err.printf("✘ Не удалось получить дату курса \"%s\": %s%n", getTitle(), e.getMessage());
             return Optional.empty();
         }
     }
 
     public void click() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        // дождаться, чтобы элемент стал кликабельным
-        wait.until(ExpectedConditions.elementToBeClickable(root));
-        // скроллим в центр экрана
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(root));
+
         ((JavascriptExecutor) driver).executeScript(
-            "arguments[0].scrollIntoView({block:'center', inline:'center'});", root);
+                "arguments[0].scrollIntoView({block:'center', inline:'center'});", root);
+
+        try {
+            Thread.sleep(100); // задержка перед кликом
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         try {
             root.click();
         } catch (ElementClickInterceptedException e) {
-            System.out.println("Клик по элементу перехвачен, пробуем через JS");
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", root);
         }
     }
