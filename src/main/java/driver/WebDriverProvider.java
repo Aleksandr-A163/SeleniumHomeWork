@@ -1,44 +1,25 @@
 package driver;
 
 import com.google.inject.Provider;
-import com.google.inject.Singleton;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.events.EventFiringDecorator;
-import utils.HighlightingListener;
 
-/**
- * Guice Provider для WebDriver с кэшированием на уровне потока.
- */
-@Singleton
 public class WebDriverProvider implements Provider<WebDriver> {
 
-    // Каждый поток (тест) будет держать свой драйвер
-    private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     @Override
     public WebDriver get() {
-        WebDriver driver = tlDriver.get();
-        if (driver == null) {
-            WebDriverManager.chromedriver().setup();
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
-            ChromeDriver raw = new ChromeDriver(options);
-            driver = new EventFiringDecorator(new HighlightingListener())
-                         .decorate(raw);
-            tlDriver.set(driver);
+        if (driverThreadLocal.get() == null) {
+            driverThreadLocal.set(BrowserFactory.create());
         }
-        return driver;
+        return driverThreadLocal.get();
     }
 
-    /** Закрывает драйвер текущего потока и очищает ThreadLocal */
     public static void quitDriver() {
-        WebDriver driver = tlDriver.get();
+        WebDriver driver = driverThreadLocal.get();
         if (driver != null) {
             driver.quit();
-            tlDriver.remove();
+            driverThreadLocal.remove();
         }
     }
 }
