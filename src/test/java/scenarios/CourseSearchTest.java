@@ -33,9 +33,8 @@ public class CourseSearchTest {
 
         // Предзаданные названия курсов
         List<String> predefinedCourses = List.of(
-            "Геймдизайн и левел-дизайн",
-            "Разработка ядра Linux",
-            "PHP Developer. Professional"
+            "Product Marketing Manager в IT",
+            "Руководитель IT проектов"
         );
         String courseName = predefinedCourses.get(
             new Random().nextInt(predefinedCourses.size())
