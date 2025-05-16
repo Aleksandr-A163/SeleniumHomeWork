@@ -19,9 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(GuiceExtension.class)
 public class CourseDateTest {
 
-    @Inject private WebDriver      driver;
-    @Inject private CourseCatalogPage catalog;
-    @Inject private CoursePage     course;
+    @Inject
+    private WebDriver      driver;
+    @Inject
+    private CourseCatalogPage catalog;
+    @Inject
+    private CoursePage     course;
 
     @Test
     void shouldVerifyEarliestAndLatestCourseDates() {

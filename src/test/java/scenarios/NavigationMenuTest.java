@@ -16,8 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(GuiceExtension.class)
 public class NavigationMenuTest {
 
-    @Inject private WebDriver driver;
-    @Inject private MainPage mainPage;
+    @Inject
+    private WebDriver driver;
+    @Inject
+    private MainPage mainPage;
 
     @Test
     void randomCategoryOpensCorrectCatalog() {

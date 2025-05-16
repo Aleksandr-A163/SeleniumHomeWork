@@ -22,10 +22,8 @@ public class CourseSearchTest {
 
     @Inject
     private WebDriver driver;
-
     @Inject
     private CourseCatalogPage catalogPage;
-
     @Inject
     private CoursePage coursePage;
 
