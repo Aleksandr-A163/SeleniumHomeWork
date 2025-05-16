@@ -4,7 +4,6 @@ plugins {
     id 'com.github.spotbugs' version '5.0.13'
 }
 
-
 repositories {
     mavenCentral()
 }
@@ -14,7 +13,6 @@ java {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
-
 
 dependencies {
     // Selenium
@@ -41,13 +39,26 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
- test {
-   useJUnitPlatform()
+test {
+    useJUnitPlatform()
 
-     testLogging {
-         events "passed", "skipped", "failed"
-     }
- }
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true  // включает System.out в вывод
+
+        // Формат логов
+        exceptionFormat = 'full'
+    }
+
+    // UTF-8 для корректного отображения DisplayName
+    jvmArgs '-Dfile.encoding=UTF-8'
+
+    // Вывод логов в файл (например, test.log)
+    outputs.upToDateWhen { false }
+    doFirst {
+        System.setOut(new PrintStream(new FileOutputStream("$buildDir/test.log")))
+    }
+}
 
 checkstyle {
     configFile = file("linters/checkstyle.xml")
