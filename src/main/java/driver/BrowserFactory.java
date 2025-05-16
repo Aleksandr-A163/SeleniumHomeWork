@@ -10,22 +10,26 @@ import org.openqa.selenium.edge.EdgeDriver;
 public class BrowserFactory {
 
     public static WebDriver create() {
-        String browser = System.getProperty("browser", "chrome").toLowerCase();
+        String browserProperty = System.getProperty("browser");
+        BrowserType browser = BrowserType.from(browserProperty);
 
         switch (browser) {
-            case "firefox":
+            case FIREFOX:
                 WebDriverManager.firefoxdriver().setup();
+                System.out.println("[INFO] Используется браузер: Firefox");
                 return new FirefoxDriver();
 
-            case "edge":
+            case EDGE:
                 WebDriverManager.edgedriver().setup();
+                System.out.println("[INFO] Используется браузер: Edge");
                 return new EdgeDriver();
 
-            case "chrome":
+            case CHROME:
             default:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--start-maximized");
+                System.out.println("[INFO] Используется браузер: Chrome");
                 return new ChromeDriver(options);
         }
     }
