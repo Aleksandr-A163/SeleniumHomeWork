@@ -30,15 +30,14 @@ src/
 
 2. **Запустить все тесты**
 
-   ```bash
+   ```
    ./gradlew clean test
    ```
-
-3. **Отчёт по тестам**
-   После выполнения отчёта будет доступен по пути:
-
-   ```
-   build/reports/tests/test/index.html
+   **Запустить тесты в выбранном браузере**
+3. ```
+   ./gradlew test -Dbrowser=chrome
+   ./gradlew test -Dbrowser=firefox
+   ./gradlew test -Dbrowser=edge
    ```
 
 ---
