@@ -1,6 +1,7 @@
 package di;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 import driver.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
@@ -11,13 +12,10 @@ import components.CourseListComponent;
 import components.CookieBannerComponent;
 
 public class TestModule extends AbstractModule {
+
     @Override
     protected void configure() {
-        // Провайдер — единый, но WebDriver без скопа
-        bind(WebDriver.class)
-            .toProvider(WebDriverProvider.class);
-
-        // Страницы и компоненты — тоже без скопа
+        // Просто регистрируем классы, без биндов
         bind(MainPage.class);
         bind(CourseCatalogPage.class);
         bind(CoursePage.class);
@@ -25,5 +23,10 @@ public class TestModule extends AbstractModule {
         bind(HeaderMenuComponent.class);
         bind(CourseListComponent.class);
         bind(CookieBannerComponent.class);
+    }
+
+    @Provides
+    WebDriver provideWebDriver() {
+        return new WebDriverProvider().get();
     }
 }
