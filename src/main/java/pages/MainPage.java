@@ -1,27 +1,27 @@
 package pages;
 
 import com.google.inject.Inject;
-import org.openqa.selenium.WebDriver;
 import components.HeaderMenuComponent;
+import org.openqa.selenium.WebDriver;
 
 /**
  * Страница «главная».
  */
-public class MainPage {
+public class MainPage extends BasePage {
 
-    private final WebDriver driver;
     private final HeaderMenuComponent header;
 
     @Inject
     public MainPage(WebDriver driver, HeaderMenuComponent header) {
-        this.driver = driver;
+        super(driver);
         this.header = header;
     }
 
-    /** Открывает главную страницу OTUS */
-    public void open() {
-        driver.get("https://otus.ru");
+    @Override
+    protected String getPath() {
+        return "/";
     }
+
 
     /**
      * Делегирует открытие меню «Обучение» в компонент.

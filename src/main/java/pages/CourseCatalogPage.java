@@ -1,7 +1,6 @@
 package pages;
 
 import com.google.inject.Inject;
-import components.CookieBannerComponent;
 import components.CourseListComponent;
 import components.CourseCardComponent;
 import org.openqa.selenium.WebDriver;
@@ -14,27 +13,25 @@ import java.util.stream.Collectors;
  * Page Object для страницы каталога курсов.
  * Делегирует логику работы с баннером и списком карточек соответствующим компонентам.
  */
-public class CourseCatalogPage {
+public class CourseCatalogPage extends BasePage {
 
-    private static final String URL = "https://otus.ru/catalog/courses";
-
-    private final WebDriver driver;
-    private final CookieBannerComponent cookieBanner;
     private final CourseListComponent courseList;
 
     @Inject
     public CourseCatalogPage(WebDriver driver,
-                              CookieBannerComponent cookieBanner,
-                              CourseListComponent courseList) {
-        this.driver = driver;
-        this.cookieBanner = cookieBanner;
+                             CourseListComponent courseList) {
+        super(driver);
         this.courseList = courseList;
+    }
+
+    @Override
+    protected String getPath() {
+        return "/catalog/courses";
     }
 
     /** Открывает страницу каталога и ждёт загрузки карточек */
     public void open() {
-        driver.get(URL);
-        cookieBanner.acceptIfPresent();
+        super.open();
         courseList.waitForReady();
     }
 

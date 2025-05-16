@@ -2,6 +2,8 @@ package driver;
 
 import com.google.inject.Provider;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import utils.HighlightingListener;
 
 public class WebDriverProvider implements Provider<WebDriver> {
 
@@ -10,7 +12,9 @@ public class WebDriverProvider implements Provider<WebDriver> {
     @Override
     public WebDriver get() {
         if (driverThreadLocal.get() == null) {
-            driverThreadLocal.set(BrowserFactory.create());
+            WebDriver baseDriver = BrowserFactory.create();
+            WebDriver decorated = new EventFiringDecorator<>(new HighlightingListener()).decorate(baseDriver);
+            driverThreadLocal.set(decorated);
         }
         return driverThreadLocal.get();
     }

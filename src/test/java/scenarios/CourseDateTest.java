@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.WebDriver;
 import pages.CourseCatalogPage;
 import pages.CoursePage;
 
@@ -20,11 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CourseDateTest {
 
     @Inject
-    private WebDriver      driver;
-    @Inject
     private CourseCatalogPage catalog;
+
     @Inject
-    private CoursePage     course;
+    private CoursePage course;
 
     @Test
     void shouldVerifyEarliestAndLatestCourseDates() {
@@ -47,8 +45,8 @@ public class CourseDateTest {
                 String.format("Курс '%s': ожидали %s, получили %s", title, date, actual)
             );
 
-            driver.navigate().back();
-            catalog.waitForCoursesToBeVisible();
+            // Вместо navigate().back() — переоткрываем каталог
+            catalog.open();
         }
     }
 }

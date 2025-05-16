@@ -13,20 +13,28 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class CoursePage {
+/**
+ * Страница курса.
+ */
+public class CoursePage extends BasePage {
 
-    private final WebDriver driver;
     private final WebDriverWait wait;
 
-    // Актуальный селектор заголовка курса
+    // Селектор заголовка курса
     private final By titleSelector = By.cssSelector("h1.diGrSa");
-    // Новый селектор для <p> с днём и месяцем
+
+    // Селектор для даты начала курса
     private static final String DATE_P_SELECTOR = "p.sc-1x9oq14-0.sc-3cb1l3-0.doSDez.dgWykw";
 
     @Inject
     public CoursePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    }
+
+    @Override
+    protected String getPath() {
+        return "/"; // по умолчанию; можно изменить, если slug курсов доступен
     }
 
     public String getCourseTitle() {
@@ -41,21 +49,14 @@ public class CoursePage {
     }
 
     /**
-     * Парсит дату старта курса из тега
-     * <p class="sc-1x9oq14-0 sc-3cb1l3-0 doSDez dgWykw">24 апреля</p>
-     * и дополняет годом, переданным в expectedYear.
-     *
-     * @param expectedYear год, который подставляем к дню и месяцу
-     * @return LocalDate собранный из текста <p> и expectedYear
+     * Парсит дату старта курса из HTML-страницы (через Jsoup) и добавляет год.
      */
     public LocalDate getCourseStartDateJsoup(int expectedYear) {
-        // Ждём, пока <p> появится на странице
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(DATE_P_SELECTOR)));
 
         String pageSource = driver.getPageSource();
         Document doc = Jsoup.parse(pageSource);
 
-        // Ищем именно <p> с днём и месяцем
         Element dateElement = doc.selectFirst(DATE_P_SELECTOR);
         if (dateElement == null) {
             throw new IllegalStateException(

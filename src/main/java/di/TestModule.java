@@ -9,7 +9,6 @@ import pages.CourseCatalogPage;
 import pages.CoursePage;
 import components.HeaderMenuComponent;
 import components.CourseListComponent;
-import components.CookieBannerComponent;
 
 public class TestModule extends AbstractModule {
 
@@ -22,7 +21,6 @@ public class TestModule extends AbstractModule {
 
         bind(HeaderMenuComponent.class);
         bind(CourseListComponent.class);
-        bind(CookieBannerComponent.class);
     }
 
     @Provides
