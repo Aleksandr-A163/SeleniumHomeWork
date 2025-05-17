@@ -35,11 +35,6 @@ public class CourseListComponent {
                  .collect(Collectors.toList());
     }
 
-    public List<String> getAllTitles() {
-        return getAllCards().stream()
-                            .map(CourseCardComponent::getTitle)
-                            .collect(Collectors.toList());
-    }
 
     public void clickByName(String name) {
         getAllCards().stream()
