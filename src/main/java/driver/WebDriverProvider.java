@@ -12,7 +12,20 @@ public class WebDriverProvider implements Provider<WebDriver> {
     @Override
     public WebDriver get() {
         if (driverThreadLocal.get() == null) {
-            WebDriver baseDriver = BrowserFactory.create();
+            String runMode = System.getProperty("runMode", "local");
+            String browser = System.getProperty("browser", "chrome");
+            WebDriver baseDriver;
+
+            if ("selenoid".equalsIgnoreCase(runMode)) {
+                if ("chromeMobile".equalsIgnoreCase(browser)) {
+                    baseDriver = SelenoidConfig.createChromeMobileIPhoneX();
+                } else {
+                    baseDriver = SelenoidConfig.createDesktopChrome();
+                }
+            } else {
+                baseDriver = BrowserFactory.create();
+            }
+
             WebDriver decorated = new EventFiringDecorator<>(new HighlightingListener()).decorate(baseDriver);
             driverThreadLocal.set(decorated);
         }
