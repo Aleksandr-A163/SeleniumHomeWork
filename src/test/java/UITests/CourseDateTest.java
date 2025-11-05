@@ -1,4 +1,4 @@
-package scenarios;
+package UITests;
 
 import com.google.inject.Inject;
 import di.GuiceExtension;

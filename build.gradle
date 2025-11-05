@@ -44,6 +44,7 @@ tasks.withType(JavaCompile).configureEach {
 
 test {
     useJUnitPlatform()
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     systemProperty 'browser', System.getProperty('browser', 'chrome')
     systemProperty 'runMode', System.getProperty('runMode', 'local')
     testLogging {

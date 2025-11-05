@@ -9,7 +9,12 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+/**
+ * Определяет тип браузера и создаёт соответствующий WebDriver.
+ * Теперь поддерживает и эмуляцию мобильного Chrome через Selenoid.
+ */
 public enum BrowserType {
+
     CHROME {
         @Override
         public WebDriver createDriver() {
@@ -19,6 +24,7 @@ public enum BrowserType {
             return new ChromeDriver(options);
         }
     },
+
     FIREFOX {
         @Override
         public WebDriver createDriver() {
@@ -28,6 +34,7 @@ public enum BrowserType {
             return new FirefoxDriver(options);
         }
     },
+
     EDGE {
         @Override
         public WebDriver createDriver() {
@@ -35,6 +42,14 @@ public enum BrowserType {
             EdgeOptions options = new EdgeOptions();
             options.addArguments("--start-maximized");
             return new EdgeDriver(options);
+        }
+    },
+
+    CHROME_MOBILE {
+        @Override
+        public WebDriver createDriver() {
+            // ✅ Используем SelenoidConfig для мобильной эмуляции
+            return SelenoidConfig.createChromeMobileIPhoneX();
         }
     };
 
@@ -48,8 +63,10 @@ public enum BrowserType {
         try {
             return BrowserType.valueOf(name.trim().toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Неподдерживаемый браузер: " + name +
-                ". Допустимые значения: chrome, firefox, edge.");
+            throw new IllegalArgumentException(
+                "Неподдерживаемый браузер: " + name +
+                ". Допустимые значения: chrome, firefox, edge, chromeMobile."
+            );
         }
     }
 }
