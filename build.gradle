@@ -34,8 +34,6 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.12'
     runtimeOnly 'org.slf4j:slf4j-simple:2.0.12'
 
-    // Citrus Core (API/Integration testing readiness)
-    testImplementation 'org.citrusframework:citrus-core:4.8.2'
 }
 
 tasks.withType(JavaCompile).configureEach {
