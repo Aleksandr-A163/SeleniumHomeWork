@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Проверка самого раннего и самого позднего курсов по дате начала (с использованием reduce)" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-09T13:27:25.783Z" hostname="DESKTOP-7IJK7RJ" time="55.775">
+  <properties/>
+  <testcase name="shouldVerifyEarliestAndLatestCourseDates()" classname="UITests.CourseDateTest" time="55.775"/>
+  <system-out><![CDATA[>>> Дата со страницы курса (Jsoup): 27 октября, 2025
+>>> Дата со страницы курса (Jsoup): 30 октября, 2025
+>>> Дата со страницы курса (Jsoup): 30 октября, 2025
+>>> Дата со страницы курса (Jsoup): 30 октября, 2025
+>>> Дата со страницы курса (Jsoup): 30 октября, 2025
+>>> Дата со страницы курса (Jsoup): 30 октября, 2025
+>>> Дата со страницы курса (Jsoup): 30 октября, 2025
+]]></system-out>
+  <system-err><![CDATA[[Test worker] INFO io.github.bonigarcia.wdm.WebDriverManager - Using chromedriver 142.0.7444.61 (resolved driver for Chrome 142)
+[Test worker] INFO io.github.bonigarcia.wdm.WebDriverManager - Exporting webdriver.chrome.driver as C:\Users\alexx\.cache\selenium\chromedriver\win64\142.0.7444.61\chromedriver.exe
+нояб. 09, 2025 4:27:27 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 142
+нояб. 09, 2025 4:27:27 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$5
+WARNING: Unable to find version of CDP to use for 142.0.7444.60. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.20.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+]]></system-err>
+</testsuite>
