@@ -36,8 +36,8 @@ src/
 
 1. **Клонировать репозиторий**
    ```bash
-   git clone https://github.com/Aleksandr-A163/Selenoid-Citrus
-   cd Selenoid-Citrus
+   git clone https://github.com/Aleksandr-A163/SeleniumHomeWork
+   cd SeleniumHomeWork
    ```
 
 2. **Запустить тесты (локально)**
