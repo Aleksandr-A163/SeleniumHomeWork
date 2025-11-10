@@ -42,7 +42,7 @@ public class SelenoidConfig {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(ChromeOptions.CAPABILITY, options);
         caps.setCapability("browserName", "chrome");
-        caps.setCapability("browserVersion", "123.0"); // ✅ должна совпадать с browsers.json
+        caps.setCapability("browserVersion", "122.0"); // ✅ должна совпадать с browsers.json
         caps.setCapability("selenoid:options", selenoidOptions);
 
         return new RemoteWebDriver(hubUrl(), caps);
@@ -66,7 +66,7 @@ public class SelenoidConfig {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(ChromeOptions.CAPABILITY, options);
         caps.setCapability("browserName", "chrome");
-        caps.setCapability("browserVersion", "123.0"); // ✅ синхронизировано с config/browsers.json
+        caps.setCapability("browserVersion", "122.0"); // ✅ синхронизировано с config/browsers.json
         caps.setCapability("selenoid:options", selenoidOptions);
 
         return new RemoteWebDriver(hubUrl(), caps);

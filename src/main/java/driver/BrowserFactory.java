@@ -12,21 +12,29 @@ public class BrowserFactory {
         String runMode = System.getProperty("runMode", "local"); // local | selenoid
         String browserProperty = System.getProperty("browser", "chrome"); // chrome | firefox | edge | chromeMobile
 
-        // ✅ Если указано selenoid — создаём драйвер через конфиг
+        System.out.printf("🚀 Запуск тестов: mode=%s, browser=%s%n", runMode, browserProperty);
+
+        // --- Запуск через Selenoid ---
         if ("selenoid".equalsIgnoreCase(runMode)) {
             switch (browserProperty.toLowerCase()) {
                 case "chromemobile":
+                case "chrome_mobile":
+                    System.out.println("🧭 Используется Selenoid mobile Chrome (iPhone X)");
                     return SelenoidConfig.createChromeMobileIPhoneX();
+
                 case "chrome":
+                    System.out.println("🌐 Используется Selenoid desktop Chrome");
                     return SelenoidConfig.createDesktopChrome();
+
                 default:
                     throw new IllegalArgumentException(
-                            "В режиме Selenoid поддерживаются только браузеры: chrome, chromeMobile");
+                        "В режиме Selenoid поддерживаются только браузеры: chrome, chromeMobile");
             }
         }
 
-        // ✅ По умолчанию — локальный запуск через WebDriverManager
+        // --- Локальный запуск ---
         BrowserType browser = BrowserType.from(browserProperty);
+        System.out.println("🖥 Локальный запуск браузера: " + browser.name());
         return browser.createDriver();
     }
 }

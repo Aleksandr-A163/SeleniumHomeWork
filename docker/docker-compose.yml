@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  selenoid:
+    image: aerokube/selenoid:latest
+    container_name: selenoid
+    network_mode: bridge
+    ports:
+      - "4444:4444"
+    volumes:
+      - "./browsers.json:/etc/selenoid/browsers.json"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./video:/opt/selenoid/video"
+      - "./logs:/opt/selenoid/logs"
+    command: [
+      "-limit", "5",
+      "-timeout", "5m",
+      "-service-startup-timeout", "120s",
+      "-session-attempt-timeout", "120s",
+      "-container-network", "bridge",
+      "-conf", "/etc/selenoid/browsers.json",
+      "-video-output-dir", "/opt/selenoid/video",
+      "-log-output-dir", "/opt/selenoid/logs"
+    ]
+
+  selenoid-ui:
+    image: aerokube/selenoid-ui:latest
+    container_name: selenoid-ui
+    network_mode: bridge
+    links:
+      - selenoid
+    ports:
+      - "8080:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]

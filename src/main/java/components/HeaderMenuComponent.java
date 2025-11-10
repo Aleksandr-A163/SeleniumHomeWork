@@ -2,6 +2,7 @@ package components;
 
 import com.google.inject.Inject;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -31,28 +32,51 @@ public class HeaderMenuComponent {
 
     /** Открывает меню «Обучение» */
     public void openLearningMenu() {
-        // Дожидаемся кликабельности и кликаем
-        WebElement menuButton = wait.until(ExpectedConditions.elementToBeClickable(learningMenuButton));
-        menuButton.click();
-
-        // Ждём появления хотя бы одной категории
-        wait.until(ExpectedConditions.presenceOfElementLocated(categoryLinkSelector));
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(categoryLinkSelector));
+        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(learningMenuButton));
+        btn.click();
+        // ждём появления хотя бы одной видимой ссылки категории
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(categoryLinkSelector, 0));
     }
 
     /** Кликает по случайной категории и возвращает её slug */
     public String clickRandomCategory() {
-        List<WebElement> links = wait.until(
-            ExpectedConditions.visibilityOfAllElementsLocatedBy(categoryLinkSelector));
+        // Ждём пока меню точно откроется и появятся ссылки
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(categoryLinkSelector));
 
+        List<WebElement> links = driver.findElements(categoryLinkSelector);
+
+        // Проверка на случай пустого списка
         if (links.isEmpty()) {
-            throw new NoSuchElementException("Не найдены ссылки категорий по локатору " + categoryLinkSelector);
+            throw new NoSuchElementException("❌ Категории не найдены — возможно, меню 'Обучение' не открылось");
         }
 
-        WebElement link = links.get(new Random().nextInt(links.size()));
-        String href = link.getAttribute("href");
-        String slug = href.substring(href.lastIndexOf('/') + 1);
-        link.click();
-        return slug;
+        Random random = new Random();
+        WebElement link = links.get(random.nextInt(links.size()));
+
+        String href = link.getAttribute("href"); // сохраняем slug ДО клика
+
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            try {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", link);
+                wait.until(ExpectedConditions.elementToBeClickable(link));
+                link.click();
+                return href.substring(href.lastIndexOf('/') + 1);
+            } catch (StaleElementReferenceException e) {
+                System.out.println("⚠️ DOM обновился, пробуем снова... (" + attempt + "/3)");
+                links = driver.findElements(categoryLinkSelector);
+                if (!links.isEmpty()) {
+                    link = links.get(random.nextInt(links.size()));
+                    href = link.getAttribute("href");
+                }
+            } catch (ElementClickInterceptedException e) {
+                System.out.println("⚠️ Элемент перекрыт — повторный клик...");
+                new Actions(driver).moveToElement(link).pause(Duration.ofMillis(200)).click().perform();
+                return href.substring(href.lastIndexOf('/') + 1);
+            }
+        }
+
+        throw new RuntimeException("❌ Не удалось кликнуть по категории после нескольких попыток");
     }
+
+
 }

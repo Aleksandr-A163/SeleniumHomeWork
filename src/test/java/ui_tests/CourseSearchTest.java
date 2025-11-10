@@ -1,4 +1,4 @@
-package UITests;
+package ui_tests;
 
 import com.google.inject.Inject;
 import di.GuiceExtension;
@@ -32,7 +32,7 @@ public class CourseSearchTest {
 
         // Предзаданные названия курсов
         List<String> predefinedCourses = List.of(
-            "C# Developer",
+            "Kotlin QA Engineer",
             "QA Engineer. Basic"
         );
         String courseName = predefinedCourses.get(

@@ -1,0 +1,24 @@
+---
+- name: Deploy Selenoid and Selenoid-UI
+  hosts: selenoid
+  become: yes
+
+  tasks:
+    - name: Ensure Docker and Docker Compose are installed
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+        state: present
+        update_cache: yes
+
+    - name: Copy Selenoid configs to server
+      synchronize:
+        src: "{{ playbook_dir }}/"
+        dest: /opt/selenoid
+        recursive: yes
+
+    - name: Start Selenoid environment
+      command: docker-compose up -d
+      args:
+        chdir: /opt/selenoid

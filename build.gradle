@@ -21,8 +21,9 @@ dependencies {
     // WebDriverManager
     implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
 
-    // JUnit
-    implementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    // JUnit 5
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 
     // Google Guice
     implementation 'com.google.inject:guice:7.0.0'
@@ -30,10 +31,9 @@ dependencies {
     // Jsoup
     implementation 'org.jsoup:jsoup:1.17.2'
 
-    // Логирование (опционально)
+    // Логирование
     implementation 'org.slf4j:slf4j-api:2.0.12'
     runtimeOnly 'org.slf4j:slf4j-simple:2.0.12'
-
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -42,17 +42,32 @@ tasks.withType(JavaCompile).configureEach {
 
 test {
     useJUnitPlatform()
-    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+
+    // ✅ Передаём все системные свойства (-D)
+    systemProperties(System.getProperties())
+
+    // ✅ Значения по умолчанию
     systemProperty 'browser', System.getProperty('browser', 'chrome')
     systemProperty 'runMode', System.getProperty('runMode', 'local')
+
+    // ✅ Для стабильности тестов под Selenoid
+    systemProperty 'selenide.timeout', '10000'
+    systemProperty 'selenide.browserSize', '1920x1080'
+
+    // ✅ Параллельный запуск
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+
+    // ✅ Полное логирование
     testLogging {
         events "passed", "skipped", "failed"
         showStandardStreams = true
         exceptionFormat = 'full'
     }
 
+    // ✅ Корректная кодировка
     jvmArgs '-Dfile.encoding=UTF-8'
 
+    // ✅ Логирование в build/test.log
     def logStream
     doFirst {
         logStream = new PrintStream(new FileOutputStream("$buildDir/test.log"))
@@ -73,4 +88,23 @@ spotbugs {
     effort = 'max'
     reportLevel = 'low'
     excludeFilter = file("linters/spotbugs-exclude.xml")
+}
+
+//
+// ✅ Дополнительные alias-задачи для Selenoid
+//
+tasks.register('testSelenoidChrome', Test) {
+    group = 'verification'
+    description = 'Run tests in Selenoid (Desktop Chrome)'
+    useJUnitPlatform()
+    systemProperty 'runMode', 'selenoid'
+    systemProperty 'browser', 'chrome'
+}
+
+tasks.register('testSelenoidMobile', Test) {
+    group = 'verification'
+    description = 'Run tests in Selenoid (Mobile Chrome, iPhone X)'
+    useJUnitPlatform()
+    systemProperty 'runMode', 'selenoid'
+    systemProperty 'browser', 'chromeMobile'
 }

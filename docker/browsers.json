@@ -1,0 +1,60 @@
+{
+  "chrome": {
+    "default": "122.0",
+    "versions": {
+      "122.0": {
+        "image": "selenoid/vnc:chrome_122.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {"/tmp": "size=512m"},
+        "env": ["LANG=en_US.UTF-8", "TZ=Europe/Moscow"],
+        "hosts": ["host.docker.internal:host-gateway"],
+        "labels": {
+          "browser": "chrome",
+          "version": "122.0",
+          "mobile": "false"
+        }
+      },
+      "122.0-mobile": {
+        "image": "selenoid/vnc:chrome_122.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {"/tmp": "size=512m"},
+        "env": ["LANG=en_US.UTF-8", "TZ=Europe/Moscow"],
+        "hosts": ["host.docker.internal:host-gateway"],
+        "labels": {
+          "browser": "chrome",
+          "version": "122.0",
+          "mobile": "true",
+          "deviceName": "iPhone X"
+        }
+      }
+    }
+  },
+  "firefox": {
+    "default": "121.0",
+    "versions": {
+      "121.0": {
+        "image": "selenoid/vnc:firefox_121.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {"/tmp": "size=512m"},
+        "env": ["LANG=en_US.UTF-8", "TZ=Europe/Moscow"],
+        "hosts": ["host.docker.internal:host-gateway"]
+      }
+    }
+  },
+  "edge": {
+    "default": "121.0",
+    "versions": {
+      "121.0": {
+        "image": "selenoid/vnc:edge_121.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {"/tmp": "size=512m"},
+        "env": ["LANG=en_US.UTF-8", "TZ=Europe/Moscow"],
+        "hosts": ["host.docker.internal:host-gateway"]
+      }
+    }
+  }
+}
