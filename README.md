@@ -221,9 +221,8 @@ docker-compose up -d
 ```
 
 Ожидается:
-- Selenoid доступен по `http://localhost:8080`
+- Selenoid доступен по `http://localhost:8080`[README.md]
 - В панели видны активные сессии
-- Тесты проходят успешно (2–3 из 3)
 - Видео и логи сохраняются в `/docker/video` и `/docker/logs`
 
 ---
