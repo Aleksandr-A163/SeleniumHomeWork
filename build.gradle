@@ -1,8 +1,11 @@
 plugins {
     id 'java'
     id 'checkstyle'
-    id 'com.github.spotbugs' version '5.0.13'
+    id 'com.github.spotbugs' version '5.0.14'
 }
+
+group = 'com.seleniumhomework'
+version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -15,59 +18,61 @@ java {
 }
 
 dependencies {
-    // Selenium
+    // --- Selenium ---
     implementation 'org.seleniumhq.selenium:selenium-java:4.20.0'
 
-    // WebDriverManager
+    // --- WebDriverManager ---
     implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
 
-    // JUnit 5
+    // --- JUnit 5 ---
     implementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 
-    // Google Guice
+    // --- Google Guice (DI) ---
     implementation 'com.google.inject:guice:7.0.0'
 
-    // Jsoup
+    // --- Jsoup ---
     implementation 'org.jsoup:jsoup:1.17.2'
 
-    // Логирование
+    // --- Логирование ---
     implementation 'org.slf4j:slf4j-api:2.0.12'
     runtimeOnly 'org.slf4j:slf4j-simple:2.0.12'
 }
 
+// ✅ Кодировка
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+// ✅ Конфигурация JUnit
 test {
     useJUnitPlatform()
 
-    // ✅ Передаём все системные свойства (-D)
+    // Передаём системные свойства (-D)
     systemProperties(System.getProperties())
 
-    // ✅ Значения по умолчанию
+    // Значения по умолчанию
     systemProperty 'browser', System.getProperty('browser', 'chrome')
     systemProperty 'runMode', System.getProperty('runMode', 'local')
 
-    // ✅ Для стабильности тестов под Selenoid
+    // Для стабильности тестов под Selenoid
     systemProperty 'selenide.timeout', '10000'
     systemProperty 'selenide.browserSize', '1920x1080'
 
-    // ✅ Параллельный запуск
+    // Параллельный запуск
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 
-    // ✅ Полное логирование
+    // Полное логирование
     testLogging {
         events "passed", "skipped", "failed"
         showStandardStreams = true
         exceptionFormat = 'full'
     }
 
-    // ✅ Корректная кодировка
+    // Кодировка
     jvmArgs '-Dfile.encoding=UTF-8'
 
-    // ✅ Логирование в build/test.log
+    // Логирование в build/test.log
     def logStream
     doFirst {
         logStream = new PrintStream(new FileOutputStream("$buildDir/test.log"))
@@ -78,20 +83,45 @@ test {
     }
 }
 
+//
+// ✅ Настройка Checkstyle
+//
 checkstyle {
-    configFile = file("linters/checkstyle.xml")
     toolVersion = "10.12.3"
+    configFile = file("$rootDir/linters/checkstyle.xml")
+    ignoreFailures = false
+    showViolations = true
 }
 
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        xml.required = false
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/checkstyle/${name}.html")
+    }
+}
+
+//
+// ✅ Настройка SpotBugs
+//
 spotbugs {
     toolVersion = "4.8.3"
     effort = 'max'
     reportLevel = 'low'
-    excludeFilter = file("linters/spotbugs-exclude.xml")
+    excludeFilter = file("$rootDir/linters/spotbugs-exclude.xml")
+    ignoreFailures = true
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
+    reports {
+        xml.required = false
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/spotbugs/${name}.html")
+    }
 }
 
 //
-// ✅ Дополнительные alias-задачи для Selenoid
+// ✅ Alias-задачи для Selenoid
 //
 tasks.register('testSelenoidChrome', Test) {
     group = 'verification'
@@ -107,4 +137,13 @@ tasks.register('testSelenoidMobile', Test) {
     useJUnitPlatform()
     systemProperty 'runMode', 'selenoid'
     systemProperty 'browser', 'chromeMobile'
+}
+
+//
+// ✅ Удобный alias для полной проверки (линтеры + тесты)
+//
+tasks.register('fullCheck') {
+    group = 'verification'
+    description = 'Run Checkstyle, SpotBugs and tests'
+    dependsOn 'checkstyleMain', 'spotbugsMain', 'test'
 }

@@ -24,11 +24,11 @@ public class SelenoidConfig {
      */
     private static URL hubUrl() {
         try {
-            // ✅ Меняем localhost → IP Ubuntu из WSL2
-            String hub = System.getProperty("selenoid.hub", "http://172.21.29.139:4444/wd/hub");
+            // ⚙️ Используем localhost, т.к. тесты запускаются вне Docker
+            String hub = System.getProperty("selenoid.hub", "http://localhost:4444/wd/hub");
             return new URL(hub);
         } catch (MalformedURLException e) {
-            throw new RuntimeException("❌ Invalid Selenoid hub URL", e);
+            throw new RuntimeException("Invalid Selenoid hub URL", e);
         }
     }
 

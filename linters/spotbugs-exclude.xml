@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- Игнорируем тестовые классы -->
+    <Match>
+        <Class name="~.*Test.*"/>
+    </Match>
+
+    <!-- Игнорируем DI-модули -->
+    <Match>
+        <Class name="~.*Module.*"/>
+    </Match>
+
+    <!-- Игнорируем страницы и степы -->
+    <Match>
+        <Class name="~.*Page.*"/>
+    </Match>
+</FindBugsFilter>

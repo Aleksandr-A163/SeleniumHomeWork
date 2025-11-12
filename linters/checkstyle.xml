@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<module name="Checker">
+    <property name="severity" value="warning"/>
+    <module name="TreeWalker">
+        <module name="FileTabCharacter"/>
+        <module name="NeedBraces"/>
+        <module name="EmptyBlock"/>
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround"/>
+        <module name="UnusedImports"/>
+        <module name="LineLength">
+            <property name="max" value="140"/>
+        </module>
+        <module name="MethodParamPad"/>
+        <module name="ParenPad"/>
+        <module name="RightCurly"/>
+        <module name="LeftCurly"/>
+        <module name="FinalParameters"/>
+        <module name="AvoidStarImport"/>
+    </module>
+</module>

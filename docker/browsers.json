@@ -43,18 +43,5 @@
         "hosts": ["host.docker.internal:host-gateway"]
       }
     }
-  },
-  "edge": {
-    "default": "121.0",
-    "versions": {
-      "121.0": {
-        "image": "selenoid/vnc:edge_121.0",
-        "port": "4444",
-        "path": "/",
-        "tmpfs": {"/tmp": "size=512m"},
-        "env": ["LANG=en_US.UTF-8", "TZ=Europe/Moscow"],
-        "hosts": ["host.docker.internal:host-gateway"]
-      }
-    }
   }
 }

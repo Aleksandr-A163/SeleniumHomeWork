@@ -13,10 +13,10 @@ services:
     ports:
       - "4444:4444"
     volumes:
-      - "./browsers.json:/etc/selenoid/browsers.json"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./browsers.json:/etc/selenoid/browsers.json:ro"
       - "./video:/opt/selenoid/video"
       - "./logs:/opt/selenoid/logs"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     command: >
       -limit 5
       -timeout 5m
@@ -25,12 +25,22 @@ services:
       -conf /etc/selenoid/browsers.json
       -video-output-dir /opt/selenoid/video
       -log-output-dir /opt/selenoid/logs
+      -container-network docker_selenoid-net
+    environment:
+      - TZ=Europe/Moscow
+      - OVERRIDE_VIDEO_OUTPUT_DIR=/opt/selenoid/video/
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   selenoid-ui:
     image: aerokube/selenoid-ui:latest
     container_name: selenoid-ui
     networks:
       - selenoid-net
+    depends_on:
+      - selenoid
     ports:
       - "8080:8080"
     command: ["--selenoid-uri", "http://selenoid:4444"]
+    environment:
+      - TZ=Europe/Moscow
