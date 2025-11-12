@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ui_tests.NavigationMenuTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T21:31:49.948Z" hostname="DESKTOP-7IJK7RJ" time="8.178">
+  <properties/>
+  <testcase name="randomCategoryOpensCorrectCatalog()" classname="ui_tests.NavigationMenuTest" time="8.178"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

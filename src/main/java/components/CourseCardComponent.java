@@ -16,7 +16,7 @@ public class CourseCardComponent {
     private final WebElement root;
     private final WebDriver driver;
 
-    private final By titleSelector = By.cssSelector("h6 > div");
+    private final By titleSelector = By.cssSelector("h6 div");
     private final By dateTextSelector = By.cssSelector("div[class*='sc-157icee-1'] > div");
 
     public CourseCardComponent(WebDriver driver, WebElement root) {
@@ -42,6 +42,7 @@ public class CourseCardComponent {
             return Optional.empty();
         }
     }
+
 
     public void click() {
         new WebDriverWait(driver, Duration.ofSeconds(10))

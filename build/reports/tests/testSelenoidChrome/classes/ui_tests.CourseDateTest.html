@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Проверка самого раннего и самого позднего курсов по дате начала (с использованием reduce)</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Проверка самого раннего и самого позднего курсов по дате начала (с использованием reduce)</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/ui_tests.html">ui_tests</a> &gt; CourseDateTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">39.726s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a href="#">Tests</a>
+</li>
+<li>
+<a href="#">Standard output</a>
+</li>
+<li>
+<a href="#">Standard error</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">shouldVerifyEarliestAndLatestCourseDates()</td>
+<td class="success">39.726s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>&#x1f50e; Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: QA Lead
+&#x1f50e; Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: Разработка децентрализованных приложений
+&#x1f50e; Всего найдено курсов: 11
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+✅ Курс успешно найден и кликнут: Электроника и электротехника
+&#x1f50e; Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: Infrastructure as a code
+&#x1f50e; Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: Рекомендательные системы
+</pre>
+</span>
+</div>
+<div class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>нояб. 13, 2025 12:31:02 AM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+INFO: Using OpenTelemetry for tracing
+✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;QA Engineer. Basic&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;Управление AI/ML-продуктом&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;QA Engineer. Basic&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;Управление AI/ML-продуктом&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'QA Lead' не содержит дату старта — пропускаем
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Разработка децентрализованных приложений' не содержит дату старта — пропускаем
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Электроника и электротехника' не содержит дату старта — пропускаем
+✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;QA Engineer. Basic&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;Управление AI/ML-продуктом&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;QA Engineer. Basic&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;Управление AI/ML-продуктом&quot;: Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Infrastructure as a code' не содержит дату старта — пропускаем
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Рекомендательные системы' не содержит дату старта — пропускаем
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 8.14</a> at 13 нояб. 2025 г., 00:31:58</p>
+</div>
+</div>
+</body>
+</html>

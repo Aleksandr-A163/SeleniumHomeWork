@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Проверка самого раннего и самого позднего курсов по дате начала (с использованием reduce)" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T21:31:02.225Z" hostname="DESKTOP-7IJK7RJ" time="39.726">
+  <properties/>
+  <testcase name="shouldVerifyEarliestAndLatestCourseDates()" classname="ui_tests.CourseDateTest" time="39.726"/>
+  <system-out><![CDATA[]]>&#x1f50e;<![CDATA[ Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: QA Lead
+]]>&#x1f50e;<![CDATA[ Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: Разработка децентрализованных приложений
+]]>&#x1f50e;<![CDATA[ Всего найдено курсов: 11
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+✅ Курс успешно найден и кликнут: Электроника и электротехника
+]]>&#x1f50e;<![CDATA[ Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: Infrastructure as a code
+]]>&#x1f50e;<![CDATA[ Всего найдено курсов: 14
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+✅ Курс успешно найден и кликнут: Рекомендательные системы
+]]></system-out>
+  <system-err><![CDATA[нояб. 13, 2025 12:31:02 AM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+INFO: Using OpenTelemetry for tracing
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса "QA Engineer. Basic": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "Управление AI/ML-продуктом": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса "QA Engineer. Basic": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "Управление AI/ML-продуктом": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'QA Lead' не содержит дату старта — пропускаем
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Разработка децентрализованных приложений' не содержит дату старта — пропускаем
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Электроника и электротехника' не содержит дату старта — пропускаем
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса "QA Engineer. Basic": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "Управление AI/ML-продуктом": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+✘ Не удалось получить дату курса "QA Engineer. Basic": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "Управление AI/ML-продуктом": Text 'О дате старта будет объявлено позже' could not be parsed at index 0
+✘ Не удалось получить дату курса "": Text '' could not be parsed at index 0
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Infrastructure as a code' не содержит дату старта — пропускаем
+⚠️ На странице курса отсутствует дата старта
+⚠️ Курс 'Рекомендательные системы' не содержит дату старта — пропускаем
+]]></system-err>
+</testsuite>

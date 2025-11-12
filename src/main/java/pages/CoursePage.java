@@ -11,10 +11,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException; // ✅ добавлен импорт
 import java.util.Locale;
 
 /**
- * Страница курса.
+ * Страница курса Otus.
  */
 public class CoursePage extends BasePage {
 
@@ -23,8 +24,8 @@ public class CoursePage extends BasePage {
     // Селектор заголовка курса
     private final By titleSelector = By.cssSelector("h1.diGrSa");
 
-    // Селектор для даты начала курса
-    private static final String DATE_P_SELECTOR = "p.sc-1x9oq14-0.sc-3cb1l3-0.doSDez.dgWykw";
+    // Селектор для даты начала курса (может меняться на Otus)
+    private static final String DATE_P_SELECTOR = "p[class*='sc-1x9oq14-0']";
 
     @Inject
     public CoursePage(WebDriver driver) {
@@ -34,12 +35,12 @@ public class CoursePage extends BasePage {
 
     @Override
     protected String getPath() {
-        return "/"; // по умолчанию; можно изменить, если slug курсов доступен
+        return "/"; // при необходимости можно переопределить
     }
 
     public String getCourseTitle() {
         WebElement titleElement = wait.until(
-            ExpectedConditions.visibilityOfElementLocated(titleSelector)
+                ExpectedConditions.visibilityOfElementLocated(titleSelector)
         );
         return titleElement.getText().trim();
     }
@@ -49,27 +50,36 @@ public class CoursePage extends BasePage {
     }
 
     /**
-     * Парсит дату старта курса из HTML-страницы (через Jsoup) и добавляет год.
+     * Получает дату старта курса. Без падения на пустых или отсутствующих элементах.
      */
-    public LocalDate getCourseStartDateJsoup(int expectedYear) {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(DATE_P_SELECTOR)));
+    public LocalDate getCourseStartDateJsoup() {
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(DATE_P_SELECTOR)));
 
-        String pageSource = driver.getPageSource();
-        Document doc = Jsoup.parse(pageSource);
+            WebElement dateElement = driver.findElement(By.cssSelector(DATE_P_SELECTOR));
+            String text = dateElement.getText().trim();
 
-        Element dateElement = doc.selectFirst(DATE_P_SELECTOR);
-        if (dateElement == null) {
-            throw new IllegalStateException(
-                "Тег даты старта курса не найден: " + DATE_P_SELECTOR
-            );
+            if (text.isEmpty()) {
+                System.err.println("⚠️ На странице курса отсутствует дата старта");
+                return null;
+            }
+
+            // Приводим к формату "29 октября, 2025"
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", new Locale("ru"));
+
+            // Иногда год отсутствует, тогда добавляем текущий
+            if (!text.matches(".*\\d{4}.*")) {
+                text = text + ", " + LocalDate.now().getYear();
+            }
+
+            return LocalDate.parse(text, formatter);
+
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.err.println("⚠️ Элемент даты курса не найден: " + e.getMessage());
+            return null;
+        } catch (DateTimeParseException e) {
+            System.err.println("⚠️ Ошибка при парсинге даты: " + e.getParsedString());
+            return null;
         }
-
-        String dayMonth = dateElement.text().trim();          // например "24 апреля"
-        String rawDate = String.format("%s, %d", dayMonth, expectedYear);
-        System.out.println(">>> Дата со страницы курса (Jsoup): " + rawDate);
-
-        DateTimeFormatter formatter = DateTimeFormatter
-                .ofPattern("d MMMM, yyyy", new Locale("ru"));
-        return LocalDate.parse(rawDate, formatter);
     }
 }

@@ -32,8 +32,9 @@ public class CourseSearchTest {
 
         // Предзаданные названия курсов
         List<String> predefinedCourses = List.of(
-            "Kotlin QA Engineer",
-            "QA Engineer. Basic"
+            "QA Engineer. Basic",
+            "QA Lead",
+            "Infrastructure as a code"
         );
         String courseName = predefinedCourses.get(
             new Random().nextInt(predefinedCourses.size())

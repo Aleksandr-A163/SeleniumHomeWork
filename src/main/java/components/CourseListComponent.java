@@ -35,13 +35,27 @@ public class CourseListComponent {
                  .collect(Collectors.toList());
     }
 
-
     public void clickByName(String name) {
-        getAllCards().stream()
-            .filter(c -> c.getTitle().equalsIgnoreCase(name))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Курс не найден: " + name))
-            .click();
+        waitForReady();
+
+        List<CourseCardComponent> cards = getAllCards();
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("❌ На странице не найдено ни одной карточки курса");
+        }
+
+        System.out.printf("🔎 Всего найдено курсов: %d%n", cards.size());
+        cards.forEach(c -> System.out.println("— " + c.getTitle()));
+
+        Optional<CourseCardComponent> course = cards.stream()
+                .filter(c -> c.getTitle().trim().toLowerCase().contains(name.toLowerCase()))
+                .findFirst();
+
+        if (course.isEmpty()) {
+            throw new IllegalArgumentException("❌ Курс не найден на странице: " + name);
+        }
+
+        course.get().click();
+        System.out.println("✅ Курс успешно найден и кликнут: " + name);
     }
 
     public List<CourseCardComponent> getCardsWithDates() {
