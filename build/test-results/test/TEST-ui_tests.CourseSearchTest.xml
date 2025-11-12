@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Проверка перехода на случайную страницу курса из предзаданных названий" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T21:58:08.167Z" hostname="DESKTOP-7IJK7RJ" time="8.308">
+<testsuite name="Проверка перехода на случайную страницу курса из предзаданных названий" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T22:07:02.289Z" hostname="DESKTOP-7IJK7RJ" time="8.335">
   <properties/>
-  <testcase name="randomCourseNavigation()" classname="ui_tests.CourseSearchTest" time="8.308"/>
-  <system-out><![CDATA[]]>&#x1f50e;<![CDATA[ Всего найдено курсов: 11
+  <testcase name="randomCourseNavigation()" classname="ui_tests.CourseSearchTest" time="8.335"/>
+  <system-out><![CDATA[? Всего найдено курсов: 14
 — 
 — QA Engineer. Basic
 — Управление AI/ML-продуктом
@@ -14,9 +14,12 @@
 — Администрирование Nginx/Angie
 — Infrastructure as a code
 — Рекомендательные системы
-✅ Курс успешно найден и кликнут: QA Lead
+— QA Lead
+— Разработка децентрализованных приложений
+— 
+? Курс успешно найден и кликнут: Infrastructure as a code
 ]]></system-out>
-  <system-err><![CDATA[нояб. 13, 2025 12:58:08 AM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+  <system-err><![CDATA[нояб. 13, 2025 1:07:02 AM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
 INFO: Using OpenTelemetry for tracing
 ]]></system-err>
 </testsuite>

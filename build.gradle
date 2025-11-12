@@ -47,6 +47,10 @@ tasks.withType(JavaCompile).configureEach {
 // ✅ Конфигурация JUnit
 test {
     useJUnitPlatform()
+    // Исправляем крякозябры в консоли
+    systemProperty 'file.encoding', 'UTF-8'
+    // Повышаем стабильность Selenium-тестов
+    systemProperty 'webdriver.http.factory', 'jdk-http-client'
 
     // Передаём системные свойства (-D)
     systemProperties(System.getProperties())
@@ -64,13 +68,10 @@ test {
 
     // Полное логирование
     testLogging {
-        events "passed", "skipped", "failed"
-        showStandardStreams = true
-        exceptionFormat = 'full'
+        events "PASSED", "FAILED", "SKIPPED", "STANDARD_OUT", "STANDARD_ERROR"
+        exceptionFormat "full"
     }
 
-    // Кодировка
-    jvmArgs '-Dfile.encoding=UTF-8'
 
     // Логирование в build/test.log
     def logStream

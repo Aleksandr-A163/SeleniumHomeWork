@@ -18,65 +18,79 @@ public class HeaderMenuComponent {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    /** Кнопка «Обучение» в хедере */
+    /** Кнопка "Обучение" в хедере */
     private final By learningMenuButton = By.cssSelector("nav span[title='Обучение']");
 
-    /** Ссылки на категории (устойчивый локатор, без динамических классов) */
+    /** Кнопка бургера (для мобильной версии) */
+    private final By burgerMenuButton = By.cssSelector("button[data-testid*='burger'], .header__burger, .hamburger");
+
+    /** Ссылки на категории */
     private final By categoryLinkSelector = By.cssSelector("a[href*='/categories/']");
 
     @Inject
     public HeaderMenuComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
-    /** Открывает меню «Обучение» */
+    /** Открывает меню «Обучение», включая бургер в мобильной версии */
     public void openLearningMenu() {
+        try {
+            // если бургер есть — открываем его
+            List<WebElement> burgers = driver.findElements(burgerMenuButton);
+            if (!burgers.isEmpty()) {
+                WebElement burger = burgers.get(0);
+                if (burger.isDisplayed()) {
+                    burger.click();
+                    System.out.println("🍔 Открыто бургер-меню (мобильная версия)");
+                    Thread.sleep(500);
+                }
+            }
+        } catch (InterruptedException ignored) {}
+
+        // открываем "Обучение"
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(learningMenuButton));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", btn);
         btn.click();
-        // ждём появления хотя бы одной видимой ссылки категории
+
+        // ждём появления категорий
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(categoryLinkSelector, 0));
     }
 
     /** Кликает по случайной категории и возвращает её slug */
     public String clickRandomCategory() {
-        // Ждём пока меню точно откроется и появятся ссылки
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(categoryLinkSelector));
+        // Убедимся, что меню открыто
+        openLearningMenu();
 
+        // Ждём появления ссылок
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(categoryLinkSelector));
         List<WebElement> links = driver.findElements(categoryLinkSelector);
 
-        // Проверка на случай пустого списка
         if (links.isEmpty()) {
-            throw new NoSuchElementException("❌ Категории не найдены — возможно, меню 'Обучение' не открылось");
+            throw new NoSuchElementException("❌ Категории не найдены — меню 'Обучение' пустое");
         }
 
         Random random = new Random();
         WebElement link = links.get(random.nextInt(links.size()));
-
-        String href = link.getAttribute("href"); // сохраняем slug ДО клика
+        String href = link.getAttribute("href");
 
         for (int attempt = 1; attempt <= 3; attempt++) {
             try {
                 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", link);
                 wait.until(ExpectedConditions.elementToBeClickable(link));
                 link.click();
+                System.out.println("✅ Клик по категории: " + href);
                 return href.substring(href.lastIndexOf('/') + 1);
-            } catch (StaleElementReferenceException e) {
-                System.out.println("⚠️ DOM обновился, пробуем снова... (" + attempt + "/3)");
+            } catch (Exception e) {
+                System.out.println("⚠️ Попытка " + attempt + " неудачна: " + e.getClass().getSimpleName());
                 links = driver.findElements(categoryLinkSelector);
                 if (!links.isEmpty()) {
                     link = links.get(random.nextInt(links.size()));
                     href = link.getAttribute("href");
                 }
-            } catch (ElementClickInterceptedException e) {
-                System.out.println("⚠️ Элемент перекрыт — повторный клик...");
-                new Actions(driver).moveToElement(link).pause(Duration.ofMillis(200)).click().perform();
-                return href.substring(href.lastIndexOf('/') + 1);
             }
         }
 
-        throw new RuntimeException("❌ Не удалось кликнуть по категории после нескольких попыток");
+        throw new RuntimeException("❌ Не удалось кликнуть по категории после 3 попыток");
     }
-
-
 }
