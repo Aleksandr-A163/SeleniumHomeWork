@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ui_tests.NavigationMenuTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-10T13:50:31.515Z" hostname="DESKTOP-7IJK7RJ" time="7.614">
-  <properties/>
-  <testcase name="randomCategoryOpensCorrectCatalog()" classname="ui_tests.NavigationMenuTest" time="7.614"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[нояб. 10, 2025 4:50:31 PM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
-INFO: Using OpenTelemetry for tracing
-]]></system-err>
-</testsuite>

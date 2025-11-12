@@ -12,21 +12,27 @@ import java.util.Map;
 
 /**
  * Selenoid connection helper.
- * Usage is controlled via -DrunMode=selenoid and -Dbrowser=chrome|chromeMobile
+ * Supports desktop and mobile Chrome (iPhone X emulation).
+ * Run mode is controlled via -DrunMode=selenoid and -Dbrowser=chrome|chromeMobile
  */
 public class SelenoidConfig {
 
+    /**
+     * Получение адреса Selenoid-хоста.
+     * Для WSL2 вместо localhost / host.docker.internal
+     * нужно указать IP Ubuntu (узнать можно командой `hostname -I`)
+     */
     private static URL hubUrl() {
         try {
-            // Windows / Mac: host.docker.internal, Linux: 127.0.0.1
-            String hub = System.getProperty("selenoid.hub", "http://host.docker.internal:4444/wd/hub");
+            // ✅ Меняем localhost → IP Ubuntu из WSL2
+            String hub = System.getProperty("selenoid.hub", "http://172.21.29.139:4444/wd/hub");
             return new URL(hub);
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Invalid Selenoid hub URL", e);
+            throw new RuntimeException("❌ Invalid Selenoid hub URL", e);
         }
     }
 
-    /** Desktop Chrome configuration */
+    /** 🖥 Desktop Chrome configuration */
     public static WebDriver createDesktopChrome() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
@@ -42,15 +48,16 @@ public class SelenoidConfig {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(ChromeOptions.CAPABILITY, options);
         caps.setCapability("browserName", "chrome");
-        caps.setCapability("browserVersion", "122.0"); // ✅ должна совпадать с browsers.json
+        caps.setCapability("browserVersion", "122.0"); // 🔄 совпадает с browsers.json
         caps.setCapability("selenoid:options", selenoidOptions);
 
         return new RemoteWebDriver(hubUrl(), caps);
     }
 
-    /** Mobile Chrome configuration (iPhone X emulation) */
+    /** 📱 Mobile Chrome configuration (iPhone X emulation) */
     public static WebDriver createChromeMobileIPhoneX() {
         ChromeOptions options = new ChromeOptions();
+
         Map<String, Object> mobileEmu = new HashMap<>();
         mobileEmu.put("deviceName", "iPhone X");
         options.setExperimentalOption("mobileEmulation", mobileEmu);
@@ -66,7 +73,7 @@ public class SelenoidConfig {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(ChromeOptions.CAPABILITY, options);
         caps.setCapability("browserName", "chrome");
-        caps.setCapability("browserVersion", "122.0"); // ✅ синхронизировано с config/browsers.json
+        caps.setCapability("browserVersion", "122.0"); // 🔄 синхронизировано с config/browsers.json
         caps.setCapability("selenoid:options", selenoidOptions);
 
         return new RemoteWebDriver(hubUrl(), caps);

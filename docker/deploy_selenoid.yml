@@ -1,24 +1,55 @@
 ---
-- name: Deploy Selenoid and Selenoid-UI
-  hosts: selenoid
+- name: 🚀 Deploy Selenoid and UI via Docker
+  hosts: localhost
   become: yes
 
   tasks:
-    - name: Ensure Docker and Docker Compose are installed
+    - name: 🧩 Ensure Docker is installed
       apt:
-        name:
-          - docker.io
-          - docker-compose
+        name: docker.io
         state: present
         update_cache: yes
 
-    - name: Copy Selenoid configs to server
-      synchronize:
-        src: "{{ playbook_dir }}/"
-        dest: /opt/selenoid
-        recursive: yes
+    - name: 🧩 Ensure Docker Compose plugin is installed
+      apt:
+        name: docker-compose-plugin
+        state: present
 
-    - name: Start Selenoid environment
-      command: docker-compose up -d
+    - name: 📁 Create directories for Selenoid
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - "./video"
+        - "./logs"
+
+    - name: 🧠 Copy browsers.json config
+      copy:
+        src: "./browsers.json"
+        dest: "./browsers.json"
+        mode: "0644"
+
+    - name: 📦 Deploy Selenoid and UI
+      command: docker compose up -d
       args:
-        chdir: /opt/selenoid
+        chdir: "{{ playbook_dir }}"
+      register: compose_output
+
+    - name: ⏳ Wait for Selenoid to be ready
+      uri:
+        url: "http://{{ ansible_default_ipv4.address }}:4444/status"
+        method: GET
+        return_content: yes
+        status_code: 200
+      register: selenoid_status
+      retries: 10
+      delay: 5
+      until: selenoid_status.status == 200
+
+    - name: ✅ Show success message
+      debug:
+        msg:
+          - "Selenoid successfully deployed!"
+          - "🧪 Selenium endpoint: http://{{ ansible_default_ipv4.address }}:4444/wd/hub"
+          - "🖥 UI: http://{{ ansible_default_ipv4.address }}:8080"
