@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Проверка перехода на случайную страницу курса из предзаданных названий" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T21:54:55.172Z" hostname="DESKTOP-7IJK7RJ" time="9.218">
+  <properties/>
+  <testcase name="randomCourseNavigation()" classname="ui_tests.CourseSearchTest" time="9.218"/>
+  <system-out><![CDATA[]]>&#x1f50e;<![CDATA[ Всего найдено курсов: 11
+— 
+— QA Engineer. Basic
+— Управление AI/ML-продуктом
+— QA Lead
+— Разработка децентрализованных приложений
+— Электроника и электротехника
+— Product Marketing Manager в IT
+— Базы данных
+— Администрирование Nginx/Angie
+— Infrastructure as a code
+— Рекомендательные системы
+✅ Курс успешно найден и кликнут: Infrastructure as a code
+]]></system-out>
+  <system-err><![CDATA[нояб. 13, 2025 12:54:55 AM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+INFO: Using OpenTelemetry for tracing
+]]></system-err>
+</testsuite>
