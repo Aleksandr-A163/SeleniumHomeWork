@@ -1,0 +1,9 @@
+<browsers>
+  <browser name="chrome" defaultVersion="latest">
+    <version number="latest">
+      <hosts>
+        <host name="selenoid" port="4444"/>
+      </hosts>
+    </version>
+  </browser>
+</browsers>

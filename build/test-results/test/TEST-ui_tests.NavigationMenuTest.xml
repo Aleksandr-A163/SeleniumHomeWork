@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ui_tests.NavigationMenuTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-12T22:07:02.268Z" hostname="DESKTOP-7IJK7RJ" time="10.049">
+<testsuite name="ui_tests.NavigationMenuTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-24T19:19:50.665Z" hostname="DESKTOP-7IJK7RJ" time="13.469">
   <properties/>
-  <testcase name="randomCategoryOpensCorrectCatalog()" classname="ui_tests.NavigationMenuTest" time="10.049"/>
-  <system-out><![CDATA[?? Попытка 1 неудачна: ElementClickInterceptedException
-?? Попытка 2 неудачна: ElementClickInterceptedException
-? Клик по категории: https://otus.ru/categories/marketing-business
+  <testcase name="randomCategoryOpensCorrectCatalog()" classname="ui_tests.NavigationMenuTest" time="13.469"/>
+  <system-out><![CDATA[⚠️ Попытка 1 неудачна: ElementClickInterceptedException
+✅ Клик по категории: https://otus.ru/categories/online
 ]]></system-out>
-  <system-err><![CDATA[нояб. 13, 2025 1:07:02 AM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+  <system-err><![CDATA[Nov 24, 2025 10:19:50 PM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
 INFO: Using OpenTelemetry for tracing
 ]]></system-err>
 </testsuite>

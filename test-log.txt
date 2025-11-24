@@ -1,0 +1,456 @@
+> Task :clean
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :test
+
+NavigationMenuTest > randomCategoryOpensCorrectCatalog() STANDARD_ERROR
+    Nov 24, 2025 10:14:22 PM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+    INFO: Using OpenTelemetry for tracing
+
+Проверка перехода на случайную страницу курса из предзаданных названий > randomCourseNavigation() STANDARD_ERROR
+    Nov 24, 2025 10:14:22 PM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+    INFO: Using OpenTelemetry for tracing
+
+Проверка самого раннего и самого позднего курсов по дате начала (с использованием reduce) > shouldVerifyEarliestAndLatestCourseDates() STANDARD_ERROR
+    Nov 24, 2025 10:14:22 PM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+    INFO: Using OpenTelemetry for tracing
+
+NavigationMenuTest > randomCategoryOpensCorrectCatalog() FAILED
+    com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+    1) [Guice/ErrorInCustomProvider]: SessionNotCreatedException: Could not start a new session. Response code 500. Message: start container: Error response from daemon: failed to set up container networking: network selenoid-net not found 
+    Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+    Build info: version: '4.20.0', revision: '866c76ca80'
+    System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+    Driver info: RemoteWebDriver
+    Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}]}]
+    Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}
+      at di.TestModule.provideWebDriver(TestModule.java:27)
+      at ui_tests.NavigationMenuTest.driver(NavigationMenuTest.java:15)
+          \_ for field driver
+      while locating ui_tests.NavigationMenuTest
+
+    Learn more:
+      https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+    1 error
+
+    ======================
+    Full classname legend:
+    ======================
+    RemoteWebDriver:            "org.openqa.selenium.remote.RemoteWebDriver"
+    SessionNotCreatedException: "org.openqa.selenium.SessionNotCreatedException"
+    ========================
+    End of classname legend:
+    ========================
+        at app//com.google.inject.internal.InternalProvisionException.toProvisionException(InternalProvisionException.java:251)
+        at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:74)
+        at app//com.google.inject.internal.InjectorImpl.injectMembers(InjectorImpl.java:1109)
+        at app//di.GuiceExtension.beforeEach(GuiceExtension.java:16)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:167)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:203)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:203)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:166)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:133)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+        at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+        at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+        at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+        at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+        at app//org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+        at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+        at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+        at java.base@17.0.16/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base@17.0.16/java.lang.reflect.Method.invoke(Method.java:569)
+        at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+        at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+        at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+        at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+        at jdk.proxy1/jdk.proxy1.$Proxy4.stop(Unknown Source)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+        at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+        at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+        at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+        at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+        at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+        Caused by:
+        org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: start container: Error response from daemon: failed to set up container networking: network selenoid-net not found 
+        Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+        Build info: version: '4.20.0', revision: '866c76ca80'
+        System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+        Driver info: org.openqa.selenium.remote.RemoteWebDriver
+        Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}]}]
+        Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:114)
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:75)
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:61)
+            at app//org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:162)
+            at app//org.openqa.selenium.remote.TracedCommandExecutor.execute(TracedCommandExecutor.java:51)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:161)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:141)
+            at app//driver.SelenoidConfig.createDesktopChrome(SelenoidConfig.java:54)
+            at app//driver.WebDriverProvider.get(WebDriverProvider.java:23)
+            at app//di.TestModule.provideWebDriver(TestModule.java:27)
+            at app//di.TestModule$$FastClassByGuice$$d131d.GUICE$TRAMPOLINE(<generated>)
+            at app//di.TestModule$$FastClassByGuice$$d131d.apply(<generated>)
+            at app//com.google.inject.internal.ProviderMethod$FastClassProviderMethod.doProvision(ProviderMethod.java:260)
+            at app//com.google.inject.internal.ProviderMethod.doProvision(ProviderMethod.java:171)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.provision(InternalProviderInstanceBindingImpl.java:185)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.get(InternalProviderInstanceBindingImpl.java:162)
+            at app//com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+            at app//com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:169)
+            at app//com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:45)
+            at app//com.google.inject.internal.SingleFieldInjector.inject(SingleFieldInjector.java:50)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:146)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectAndNotify(MembersInjectorImpl.java:101)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:72)
+            ... 70 more
+
+Проверка перехода на случайную страницу курса из предзаданных названий > randomCourseNavigation() FAILED
+    com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+    1) [Guice/ErrorInCustomProvider]: SessionNotCreatedException: Could not start a new session. Response code 500. Message: start container: Error response from daemon: failed to set up container networking: network selenoid-net not found 
+    Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+    Build info: version: '4.20.0', revision: '866c76ca80'
+    System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+    Driver info: RemoteWebDriver
+    Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}]}]
+    Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}
+      at di.TestModule.provideWebDriver(TestModule.java:27)
+      at di.TestModule.provideCourseCatalogPage(TestModule.java:47)
+          \_ for 1st parameter
+      at di.TestModule.provideCourseCatalogPage(TestModule.java:47)
+      at ui_tests.CourseSearchTest.catalogPage(CourseSearchTest.java:20)
+          \_ for field catalogPage
+      while locating ui_tests.CourseSearchTest
+
+    Learn more:
+      https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+    1 error
+
+    ======================
+    Full classname legend:
+    ======================
+    RemoteWebDriver:            "org.openqa.selenium.remote.RemoteWebDriver"
+    SessionNotCreatedException: "org.openqa.selenium.SessionNotCreatedException"
+    ========================
+    End of classname legend:
+    ========================
+        at app//com.google.inject.internal.InternalProvisionException.toProvisionException(InternalProvisionException.java:251)
+        at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:74)
+        at app//com.google.inject.internal.InjectorImpl.injectMembers(InjectorImpl.java:1109)
+        at app//di.GuiceExtension.beforeEach(GuiceExtension.java:16)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:167)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:203)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:203)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:166)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:133)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+        at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+        at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+        at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+        at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+        at app//org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+        at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+        at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+        at java.base@17.0.16/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base@17.0.16/java.lang.reflect.Method.invoke(Method.java:569)
+        at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+        at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+        at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+        at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+        at jdk.proxy1/jdk.proxy1.$Proxy4.stop(Unknown Source)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+        at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+        at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+        at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+        at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+        at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+        Caused by:
+        org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: start container: Error response from daemon: failed to set up container networking: network selenoid-net not found 
+        Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+        Build info: version: '4.20.0', revision: '866c76ca80'
+        System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+        Driver info: org.openqa.selenium.remote.RemoteWebDriver
+        Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}]}]
+        Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:114)
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:75)
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:61)
+            at app//org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:162)
+            at app//org.openqa.selenium.remote.TracedCommandExecutor.execute(TracedCommandExecutor.java:51)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:161)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:141)
+            at app//driver.SelenoidConfig.createDesktopChrome(SelenoidConfig.java:54)
+            at app//driver.WebDriverProvider.get(WebDriverProvider.java:23)
+            at app//di.TestModule.provideWebDriver(TestModule.java:27)
+            at app//di.TestModule$$FastClassByGuice$$9d961.GUICE$TRAMPOLINE(<generated>)
+            at app//di.TestModule$$FastClassByGuice$$9d961.apply(<generated>)
+            at app//com.google.inject.internal.ProviderMethod$FastClassProviderMethod.doProvision(ProviderMethod.java:260)
+            at app//com.google.inject.internal.ProviderMethod.doProvision(ProviderMethod.java:171)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.provision(InternalProviderInstanceBindingImpl.java:185)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.get(InternalProviderInstanceBindingImpl.java:162)
+            at app//com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+            at app//com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:169)
+            at app//com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:45)
+            at app//com.google.inject.internal.SingleParameterInjector.inject(SingleParameterInjector.java:40)
+            at app//com.google.inject.internal.SingleParameterInjector.getAll(SingleParameterInjector.java:60)
+            at app//com.google.inject.internal.ProviderMethod.doProvision(ProviderMethod.java:171)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.provision(InternalProviderInstanceBindingImpl.java:185)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.get(InternalProviderInstanceBindingImpl.java:162)
+            at app//com.google.inject.internal.SingleFieldInjector.inject(SingleFieldInjector.java:50)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:146)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectAndNotify(MembersInjectorImpl.java:101)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:72)
+            ... 70 more
+
+Проверка самого раннего и самого позднего курсов по дате начала (с использованием reduce) > shouldVerifyEarliestAndLatestCourseDates() FAILED
+    com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+    1) [Guice/ErrorInCustomProvider]: SessionNotCreatedException: Could not start a new session. Response code 500. Message: start container: Error response from daemon: failed to set up container networking: network selenoid-net not found 
+    Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+    Build info: version: '4.20.0', revision: '866c76ca80'
+    System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+    Driver info: RemoteWebDriver
+    Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}]}]
+    Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}
+      at di.TestModule.provideWebDriver(TestModule.java:27)
+      at di.TestModule.provideCourseCatalogPage(TestModule.java:47)
+          \_ for 1st parameter
+      at di.TestModule.provideCourseCatalogPage(TestModule.java:47)
+      at ui_tests.CourseDateTest.catalog(CourseDateTest.java:19)
+          \_ for field catalog
+      while locating ui_tests.CourseDateTest
+
+    Learn more:
+      https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+    1 error
+
+    ======================
+    Full classname legend:
+    ======================
+    RemoteWebDriver:            "org.openqa.selenium.remote.RemoteWebDriver"
+    SessionNotCreatedException: "org.openqa.selenium.SessionNotCreatedException"
+    ========================
+    End of classname legend:
+    ========================
+        at app//com.google.inject.internal.InternalProvisionException.toProvisionException(InternalProvisionException.java:251)
+        at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:74)
+        at app//com.google.inject.internal.InjectorImpl.injectMembers(InjectorImpl.java:1109)
+        at app//di.GuiceExtension.beforeEach(GuiceExtension.java:16)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:167)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:203)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:203)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:166)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:133)
+        at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+        at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+        at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+        at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+        at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+        at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+        at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+        at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+        at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+        at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+        at app//org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+        at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+        at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+        at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+        at java.base@17.0.16/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base@17.0.16/java.lang.reflect.Method.invoke(Method.java:569)
+        at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+        at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+        at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+        at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+        at jdk.proxy1/jdk.proxy1.$Proxy4.stop(Unknown Source)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+        at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+        at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+        at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+        at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+        at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+        at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+        Caused by:
+        org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: start container: Error response from daemon: failed to set up container networking: network selenoid-net not found 
+        Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+        Build info: version: '4.20.0', revision: '866c76ca80'
+        System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+        Driver info: org.openqa.selenium.remote.RemoteWebDriver
+        Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}]}]
+        Capabilities {browserName: chrome, browserVersion: 122.0, goog:chromeOptions: {args: [--start-maximized, --no-sandbox, --disable-dev-shm-usage], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false, name: Desktop Chrome test, sessionTimeout: 3m}}
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:114)
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:75)
+            at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:61)
+            at app//org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:162)
+            at app//org.openqa.selenium.remote.TracedCommandExecutor.execute(TracedCommandExecutor.java:51)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:161)
+            at app//org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:141)
+            at app//driver.SelenoidConfig.createDesktopChrome(SelenoidConfig.java:54)
+            at app//driver.WebDriverProvider.get(WebDriverProvider.java:23)
+            at app//di.TestModule.provideWebDriver(TestModule.java:27)
+            at app//di.TestModule$$FastClassByGuice$$9d961.GUICE$TRAMPOLINE(<generated>)
+            at app//di.TestModule$$FastClassByGuice$$9d961.apply(<generated>)
+            at app//com.google.inject.internal.ProviderMethod$FastClassProviderMethod.doProvision(ProviderMethod.java:260)
+            at app//com.google.inject.internal.ProviderMethod.doProvision(ProviderMethod.java:171)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.provision(InternalProviderInstanceBindingImpl.java:185)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.get(InternalProviderInstanceBindingImpl.java:162)
+            at app//com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+            at app//com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:169)
+            at app//com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:45)
+            at app//com.google.inject.internal.SingleParameterInjector.inject(SingleParameterInjector.java:40)
+            at app//com.google.inject.internal.SingleParameterInjector.getAll(SingleParameterInjector.java:60)
+            at app//com.google.inject.internal.ProviderMethod.doProvision(ProviderMethod.java:171)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.provision(InternalProviderInstanceBindingImpl.java:185)
+            at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.get(InternalProviderInstanceBindingImpl.java:162)
+            at app//com.google.inject.internal.SingleFieldInjector.inject(SingleFieldInjector.java:50)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:146)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectAndNotify(MembersInjectorImpl.java:101)
+            at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:72)
+            ... 70 more
+
+> Task :test FAILED
+
+[Incubating] Problems report is available at: file:///mnt/c/Users/alexx/IdeaProjects/SeleniumHomeWork/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+4 actionable tasks: 4 executed
