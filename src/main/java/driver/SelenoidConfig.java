@@ -2,80 +2,62 @@ package driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Selenoid connection helper.
- * Supports desktop and mobile Chrome (iPhone X emulation).
- * Run mode is controlled via -DrunMode=selenoid and -Dbrowser=chrome|chromeMobile
- */
 public class SelenoidConfig {
 
-    /**
-     * Получение адреса Selenoid-хоста.
-     * Для WSL2 вместо localhost / host.docker.internal
-     * нужно указать IP Ubuntu (узнать можно командой `hostname -I`)
-     */
-    private static URL hubUrl() {
+    private static URL hub(RunMode runMode) {
         try {
-            // ⚙️ Используем localhost, т.к. тесты запускаются вне Docker
-            String hub = System.getProperty("selenoid.hub", "http://localhost:4444/wd/hub");
-            return new URL(hub);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Invalid Selenoid hub URL", e);
+            return switch (runMode) {
+                case SELENOID -> new URL("http://localhost:4444/wd/hub");
+                case GGR -> new URL("http://localhost:4445/wd/hub");
+                default -> throw new IllegalStateException("Hub not required for LOCAL");
+            };
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
-    /** 🖥 Desktop Chrome configuration */
-    public static WebDriver createDesktopChrome() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-
-        Map<String, Object> selenoidOptions = new HashMap<>();
-        selenoidOptions.put("enableVNC", true);
-        selenoidOptions.put("enableVideo", false);
-        selenoidOptions.put("sessionTimeout", "3m");
-        selenoidOptions.put("name", "Desktop Chrome test");
-
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability(ChromeOptions.CAPABILITY, options);
-        caps.setCapability("browserName", "chrome");
-        caps.setCapability("browserVersion", "122.0"); // 🔄 совпадает с browsers.json
-        caps.setCapability("selenoid:options", selenoidOptions);
-
-        return new RemoteWebDriver(hubUrl(), caps);
+    private static ChromeOptions baseChrome() {
+        ChromeOptions opt = new ChromeOptions();
+        opt.addArguments("--no-sandbox");
+        opt.addArguments("--disable-dev-shm-usage");
+        return opt;
     }
 
-    /** 📱 Mobile Chrome configuration (iPhone X emulation) */
-    public static WebDriver createChromeMobileIPhoneX() {
-        ChromeOptions options = new ChromeOptions();
-
-        Map<String, Object> mobileEmu = new HashMap<>();
-        mobileEmu.put("deviceName", "iPhone X");
-        options.setExperimentalOption("mobileEmulation", mobileEmu);
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+    public static WebDriver createDesktop(RunMode runMode) {
+        ChromeOptions opt = baseChrome();
 
         Map<String, Object> selenoidOptions = new HashMap<>();
         selenoidOptions.put("enableVNC", true);
-        selenoidOptions.put("enableVideo", false);
         selenoidOptions.put("sessionTimeout", "3m");
-        selenoidOptions.put("name", "Mobile Chrome (iPhone X)");
+        opt.setCapability("selenoid:options", selenoidOptions);
 
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability(ChromeOptions.CAPABILITY, options);
-        caps.setCapability("browserName", "chrome");
-        caps.setCapability("browserVersion", "122.0"); // 🔄 синхронизировано с config/browsers.json
-        caps.setCapability("selenoid:options", selenoidOptions);
+        opt.setBrowserVersion("latest");
+        opt.setCapability("browserName", "chrome");
 
-        return new RemoteWebDriver(hubUrl(), caps);
+        return new RemoteWebDriver(hub(runMode), opt);
+    }
+
+    public static WebDriver createMobile(RunMode runMode) {
+        ChromeOptions opt = baseChrome();
+
+        Map<String, Object> mobile = new HashMap<>();
+        mobile.put("deviceName", "iPhone X");
+        opt.setExperimentalOption("mobileEmulation", mobile);
+
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("sessionTimeout", "3m");
+        opt.setCapability("selenoid:options", selenoidOptions);
+
+        opt.setBrowserVersion("latest");
+        opt.setCapability("browserName", "chrome");
+
+        return new RemoteWebDriver(hub(runMode), opt);
     }
 }

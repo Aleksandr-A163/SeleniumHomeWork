@@ -9,64 +9,56 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-/**
- * Определяет тип браузера и создаёт соответствующий WebDriver.
- * Теперь поддерживает и эмуляцию мобильного Chrome через Selenoid.
- */
 public enum BrowserType {
 
     CHROME {
         @Override
-        public WebDriver createDriver() {
+        public WebDriver createLocal() {
             WebDriverManager.chromedriver().setup();
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
-            return new ChromeDriver(options);
+            ChromeOptions opt = new ChromeOptions();
+            opt.addArguments("--start-maximized");
+            return new ChromeDriver(opt);
         }
     },
 
     FIREFOX {
         @Override
-        public WebDriver createDriver() {
+        public WebDriver createLocal() {
             WebDriverManager.firefoxdriver().setup();
-            FirefoxOptions options = new FirefoxOptions();
-            options.addArguments("--start-maximized");
-            return new FirefoxDriver(options);
+            FirefoxOptions opt = new FirefoxOptions();
+            opt.addArguments("--start-maximized");
+            return new FirefoxDriver(opt);
         }
     },
 
     EDGE {
         @Override
-        public WebDriver createDriver() {
+        public WebDriver createLocal() {
             WebDriverManager.edgedriver().setup();
-            EdgeOptions options = new EdgeOptions();
-            options.addArguments("--start-maximized");
-            return new EdgeDriver(options);
+            EdgeOptions opt = new EdgeOptions();
+            opt.addArguments("--start-maximized");
+            return new EdgeDriver(opt);
         }
     },
 
     CHROME_MOBILE {
         @Override
-        public WebDriver createDriver() {
-            // ✅ Используем SelenoidConfig для мобильной эмуляции
-            return SelenoidConfig.createChromeMobileIPhoneX();
+        public WebDriver createLocal() {
+            throw new UnsupportedOperationException(
+                "Мобильный Chrome доступен только через Selenoid/GGR"
+            );
         }
     };
 
-    public abstract WebDriver createDriver();
+    public abstract WebDriver createLocal();
 
-    public static BrowserType from(String name) {
-        if (name == null || name.isBlank()) {
-            return CHROME; // По умолчанию
-        }
-
-        try {
-            return BrowserType.valueOf(name.trim().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(
-                "Неподдерживаемый браузер: " + name +
-                ". Допустимые значения: chrome, firefox, edge, chromeMobile."
-            );
-        }
+    public static BrowserType fromProperty() {
+        String value = System.getProperty("browser", "chrome").toLowerCase();
+        return switch (value) {
+            case "firefox" -> FIREFOX;
+            case "edge" -> EDGE;
+            case "chromemobile", "chrome_mobile" -> CHROME_MOBILE;
+            default -> CHROME;
+        };
     }
 }

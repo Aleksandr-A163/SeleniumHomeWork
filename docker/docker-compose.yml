@@ -1,65 +1,61 @@
-version: '3.9'
+version: "3.8"
 
 services:
-
-  selenoid:
+  selenoid-1:
     image: aerokube/selenoid:latest
-    container_name: selenoid
-    command:
-      - -limit
-      - "5"
-      - -timeout
-      - 5m
-      - -service-startup-timeout
-      - 120s
-      - -session-attempt-timeout
-      - 120s
-      - -conf
-      - /etc/selenoid/browsers.json
-      - -video-output-dir
-      - /opt/selenoid/video
-      - -log-output-dir
-      - /opt/selenoid/logs
-      - -container-network
-      - selenoid-net
-    environment:
-      TZ: Europe/Moscow
-      OVERRIDE_VIDEO_OUTPUT_DIR: /opt/selenoid/video/
-    volumes:
-      - ./browsers.json:/etc/selenoid/browsers.json:ro
-      - ./video:/opt/selenoid/video
-      - ./logs:/opt/selenoid/logs
-      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: selenoid-1
     networks:
       - selenoid-net
     ports:
-      - "4444:4444"
+      - "4444:4444"        # опционально – для отладки напрямую
+    volumes:
+      - ./browsers.json:/etc/selenoid/browsers.json:ro
+      - ./logs:/opt/selenoid/logs
+      - ./video:/opt/selenoid/video
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=Europe/Moscow
+      - OVERRIDE_VIDEO_OUTPUT_DIR=/opt/selenoid/video
+
+  selenoid-2:
+    image: aerokube/selenoid:latest
+    container_name: selenoid-2
+    networks:
+      - selenoid-net
+    # порты наружу можно не публиковать – GGR ходит по внутреннему DNS
+    volumes:
+      - ./browsers.json:/etc/selenoid/browsers.json:ro
+      - ./logs:/opt/selenoid/logs
+      - ./video:/opt/selenoid/video
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=Europe/Moscow
+      - OVERRIDE_VIDEO_OUTPUT_DIR=/opt/selenoid/video
 
   selenoid-ui:
     image: aerokube/selenoid-ui:latest
     container_name: selenoid-ui
-    command:
-      - --selenoid-uri
-      - http://selenoid:4444
-    environment:
-      TZ: Europe/Moscow
-    depends_on:
-      - selenoid
-    ports:
-      - "8080:8080"
     networks:
       - selenoid-net
+    depends_on:
+      - selenoid-1
+    environment:
+      - TZ=Europe/Moscow
+    command: ["--selenoid-uri", "http://selenoid-1:4444"]
+    ports:
+      - "8080:8080"
 
   ggr:
     image: aerokube/ggr:latest-release
     container_name: ggr
-    restart: always
-    depends_on:
-      - selenoid
     networks:
       - selenoid-net
+    depends_on:
+      - selenoid-1
+      - selenoid-2
     ports:
       - "4445:4444"
+    restart: always
     volumes:
       - ./config/users.htpasswd:/etc/grid-router/users.htpasswd:ro
       - ./config/quota:/etc/grid-router/quota:ro
@@ -67,24 +63,18 @@ services:
   ggr-ui:
     image: aerokube/ggr-ui:latest-release
     container_name: ggr-ui
-    restart: always
+    networks:
+      - selenoid-net
     depends_on:
       ggr:
         condition: service_started
     environment:
-      GGR_HOST: ggr
-      GGR_PORT: 4444
+      - GGR_HOST=ggr
+      - GGR_PORT=4444
     ports:
       - "8888:8888"
-    networks:
-      - selenoid-net
-    volumes:
-      - ./config/users.htpasswd:/etc/grid-router/users.htpasswd:ro
-      - ./config/quota:/etc/grid-router/quota:ro
-
-
+    restart: always
 
 networks:
   selenoid-net:
-    name: selenoid-net
     driver: bridge

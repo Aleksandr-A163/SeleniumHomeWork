@@ -7,36 +7,23 @@ import utils.HighlightingListener;
 
 public class WebDriverProvider implements Provider<WebDriver> {
 
-    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriver> DRIVER = new ThreadLocal<>();
 
     @Override
     public WebDriver get() {
-        if (driverThreadLocal.get() == null) {
-            String runMode = System.getProperty("runMode", "local");
-            String browser = System.getProperty("browser", "chrome");
-            WebDriver baseDriver;
-
-            if ("selenoid".equalsIgnoreCase(runMode)) {
-                if ("chromeMobile".equalsIgnoreCase(browser)) {
-                    baseDriver = SelenoidConfig.createChromeMobileIPhoneX();
-                } else {
-                    baseDriver = SelenoidConfig.createDesktopChrome();
-                }
-            } else {
-                baseDriver = BrowserFactory.create();
-            }
-
-            WebDriver decorated = new EventFiringDecorator<>(new HighlightingListener()).decorate(baseDriver);
-            driverThreadLocal.set(decorated);
+        if (DRIVER.get() == null) {
+            WebDriver base = BrowserFactory.create();
+            WebDriver decorated = new EventFiringDecorator<>(new HighlightingListener()).decorate(base);
+            DRIVER.set(decorated);
         }
-        return driverThreadLocal.get();
+        return DRIVER.get();
     }
 
     public static void quitDriver() {
-        WebDriver driver = driverThreadLocal.get();
-        if (driver != null) {
-            driver.quit();
-            driverThreadLocal.remove();
+        WebDriver drv = DRIVER.get();
+        if (drv != null) {
+            drv.quit();
+            DRIVER.remove();
         }
     }
 }

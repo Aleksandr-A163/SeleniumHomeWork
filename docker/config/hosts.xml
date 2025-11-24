@@ -1,0 +1,4 @@
+<hosts>
+    <host name="selenoid-1" port="4444"/>
+    <host name="selenoid-2" port="4444"/>
+</hosts>

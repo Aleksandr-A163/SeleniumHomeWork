@@ -18,17 +18,17 @@ java {
 }
 
 dependencies {
-    // --- Selenium ---
-    implementation 'org.seleniumhq.selenium:selenium-java:4.20.0'
+    // --- Selenium (нужна свежая версия для стабильной mobile-emulation) ---
+    implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
 
-    // --- WebDriverManager ---
-    implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+    // --- WebDriverManager (рекомендуемая стабильная версия) ---
+    implementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
 
     // --- JUnit 5 ---
     implementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 
-    // --- Google Guice (DI) ---
+    // --- Google Guice ---
     implementation 'com.google.inject:guice:7.0.0'
 
     // --- Jsoup ---
@@ -39,39 +39,32 @@ dependencies {
     runtimeOnly 'org.slf4j:slf4j-simple:2.0.12'
 }
 
-// ✅ Кодировка
+// Кодировка
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-// ✅ Конфигурация JUnit
 test {
     useJUnitPlatform()
-    // Исправляем крякозябры в консоли
+
+    // Кодировка, чтобы избежать кракозябр
     systemProperty 'file.encoding', 'UTF-8'
-    // Повышаем стабильность Selenium-тестов
+
+    // Важно для Selenium 4.20+ — стабильный HTTP client
     systemProperty 'webdriver.http.factory', 'jdk-http-client'
 
-    // Передаём системные свойства (-D)
-    systemProperties(System.getProperties())
-
-    // Значения по умолчанию
+    // Значения по умолчанию для запуска
     systemProperty 'browser', System.getProperty('browser', 'chrome')
     systemProperty 'runMode', System.getProperty('runMode', 'local')
-
-    // Для стабильности тестов под Selenoid
-    systemProperty 'selenide.timeout', '10000'
-    systemProperty 'selenide.browserSize', '1920x1080'
 
     // Параллельный запуск
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 
-    // Полное логирование
+    // Подробное логирование
     testLogging {
         events "PASSED", "FAILED", "SKIPPED", "STANDARD_OUT", "STANDARD_ERROR"
         exceptionFormat "full"
     }
-
 
     // Логирование в build/test.log
     def logStream
@@ -85,7 +78,7 @@ test {
 }
 
 //
-// ✅ Настройка Checkstyle
+// Checkstyle
 //
 checkstyle {
     toolVersion = "10.12.3"
@@ -103,7 +96,7 @@ tasks.withType(Checkstyle).configureEach {
 }
 
 //
-// ✅ Настройка SpotBugs
+// SpotBugs
 //
 spotbugs {
     toolVersion = "4.8.3"
@@ -122,7 +115,7 @@ tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
 }
 
 //
-// ✅ Alias-задачи для Selenoid
+// Алиасы для Selenoid
 //
 tasks.register('testSelenoidChrome', Test) {
     group = 'verification'
@@ -141,7 +134,7 @@ tasks.register('testSelenoidMobile', Test) {
 }
 
 //
-// ✅ Удобный alias для полной проверки (линтеры + тесты)
+// Полная проверка (линтеры + тесты)
 //
 tasks.register('fullCheck') {
     group = 'verification'
