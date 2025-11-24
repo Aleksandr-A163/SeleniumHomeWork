@@ -1,233 +1,220 @@
-# 🧪 Автотесты для OTUS.ru с использованием Selenoid и Docker
 
-Этот проект содержит набор автоматизированных тестов для сайта [otus.ru](https://otus.ru), реализованных с использованием **Java 17**, **Selenium WebDriver 4+**, **JUnit 5**, **Google Guice (DI)** и **Gradle**.  
-Проект поддерживает запуск как локально, так и через **Selenoid** с возможностью эмуляции мобильных устройств и автоматическим разворачиванием окружения через **Ansible**.
+# 🧪 Автотесты с использованием Selenoid, Docker-Compose, GGR и GGR-UI
+
+Этот проект содержит набор автоматизированных UI‑тестов, работающих через распределённый Selenium‑кластер на базе **GGR** (Grid Router) и **GGR‑UI**.  
+Архитектура позволяет масштабировать тестовые запуски, распределять нагрузку между несколькими Selenoid‑нодами и удобно мониторить состояние кластера.
 
 ---
 
-## 📦 Структура проекта
+# 📦 Структура проекта
 
 ```
 SeleniumHomeWork/
 ├─ docker/
-│  ├─ docker-compose.yml      # Конфигурация контейнеров Selenoid и Selenoid UI
-│  ├─ browsers.json           # Поддерживаемые браузеры и версии
-│  ├─ deploy_selenoid.yml     # Ansible playbook для автоматического деплоя
-│  ├─ logs/                   # Логи Selenoid
-│  └─ video/                  # Видео выполнения тестов
+│  ├─ docker-compose.yml          # GGR, GGR-UI, Selenoid-ноды
+│  ├─ ggr/
+│  │   ├─ quota.xml               # Лимиты пользователей и браузеров
+│  │   ├─ router.json             # Маршрутизация на Selenoid-ноды
+│  │   └─ users.htpasswd          # Логины/пароли для GGR
+│  ├─ ggr-ui/
+│  │   └─ config.json             # Настройки UI панели
+│  ├─ logs/
+│  └─ video/
 │
 ├─ src/
 │  ├─ main/java/
-│  │  ├─ components/          # Web-компоненты (CourseListComponent, HeaderMenuComponent и др.)
-│  │  ├─ pages/               # Page Object классы (BasePage, MainPage, CourseCatalogPage, CoursePage)
-│  │  ├─ driver/              # Фабрика WebDriver (WebDriverProvider, BrowserFactory, BrowserType, SelenoidConfig)
-│  │  ├─ di/                  # Guice-модуль и расширение (TestModule, GuiceExtension)
-│  │  └─ utils/               # Утилиты (HighlightingListener)
-│  └─ test/java/
-│     └─ ui_tests/            # Тестовые сценарии (CourseSearchTest, CourseDateTest, NavigationMenuTest)
+│  │  ├─ driver/                  # WebDriverProvider c поддержкой GGR
+│  │  ├─ pages/
+│  │  ├─ components/
+│  │  ├─ utils/
+│  │  └─ di/
+│  └─ test/java/ui_tests/
 │
-├─ build.gradle
-└─ README.md
+└─ build.gradle
 ```
 
 ---
 
-## 🚀 Быстрый старт
+# 🏗 Архитектура GGR
 
-1. **Клонировать репозиторий**
-   ```bash
-   git clone https://github.com/Aleksandr-A163/SeleniumHomeWork
-   cd SeleniumHomeWork
-   ```
+GGR — это высокопроизводительный маршрутизатор Selenium‑запросов, размещаемый перед Selenoid‑нодами.
 
-2. **Запустить тесты (локально)**
-   ```bash
-   ./gradlew clean test
-   ```
+```
+          ┌─────────────┐
+          │   Тесты     │
+          └──────┬──────┘
+                 │ WebDriver HTTP
+                 ▼
+        ┌──────────────────┐
+        │       GGR        │
+        └───┬──────────────┘
+            │ router.json
+ ┌──────────┼───────────┬───────────┐
+ ▼          ▼           ▼
+Selenoid1  Selenoid2   Selenoid3
+```
 
-3. **Открыть отчёт**
-   ```
-   build/reports/tests/test/index.html
-   ```
-
----
-
-## ✅ Реализованные фичи
-
-- **Dependency Injection** через Google Guice (`@Inject`)
-- **JUnit 5 Extension** (`GuiceExtension`) без BaseTest
-- **Подсветка элементов** при взаимодействиях (`HighlightingListener`)
-- **Декоратор WebDriver** (`EventFiringDecorator` для логирования)
-- **Stream API + Jsoup** — для обработки дат курсов
-- **Checkstyle + SpotBugs** для статического анализа
-- **Параллельный запуск тестов**
-- **Selenoid + Docker Compose + Ansible** для полного CI/CD запуска
+### GGR выполняет:
+- распределение нагрузки по нодам  
+- учёт лимитов пользователей (quota.xml)  
+- контроль количества сессий  
+- маршрутизацию к свободной ноде  
+- работу с несколькими браузерами  
 
 ---
 
-## Сценарии тестирования
+# 📄 Пример `router.json`
 
-- `CourseSearchTest` — Навигация на случайный курс из фиксированного списка  
-- `CourseDateTest` — Поиск курса с самой ранней/поздней датой начала  
-- `NavigationMenuTest` — Переход на случайную категорию из меню «Обучение» и проверка URL  
-
----
-
-# 🚀 Запуск тестов через Selenoid
-
-## 📦 Установка и запуск Selenoid (через Docker Compose)
-
-1. Перейдите в папку `docker/`
-   ```bash
-   cd docker
-   docker-compose up -d
-   ```
-
-2. После запуска:
-   - Панель управления: [http://localhost:8080](http://localhost:8080)
-   - Эндпоинт Selenium: `http://localhost:4444/wd/hub`
-
-3. Проверка статуса браузеров:
-   ```bash
-   curl http://localhost:4444/status | jq '.browsers'
-   ```
-
-Ожидаемый ответ:
 ```json
 {
-  "browsers": {
-    "chrome": { "122.0": { "image": "selenoid/vnc:chrome_122.0" } },
-    "firefox": { "122.0": { "image": "selenoid/vnc:firefox_122.0" } },
-    "opera": { "107.0": { "image": "selenoid/vnc:opera_107.0" } }
+  "browser": {
+    "chrome": [
+      { "name": "selenoid_1", "host": "selenoid1:4444" },
+      { "name": "selenoid_2", "host": "selenoid2:4444" }
+    ]
   }
 }
 ```
 
 ---
 
-## ⚙️ Автоматический деплой Selenoid (через Ansible)
+# 📄 Пример `quota.xml`
 
-Файл: `docker/deploy_selenoid.yml`
-
-Для удалённого деплоя:
-```bash
-ansible-playbook deploy_selenoid.yml -i hosts
-```
-
-Playbook выполняет:
-- Установку Docker и Docker Compose (если не установлены)
-- Развёртывание `selenoid` и `selenoid-ui`
-- Проверку порта `4444`
-- Создание каталогов `logs/` и `video/` для логов и видео
-
----
-
-## 🧪 Запуск тестов
-
-### 🖥️ Десктопный Chrome
-```bash
-.\gradlew clean test -DrunMode=selenoid -Dbrowser=chrome
-```
-
-### 📱 Мобильный Chrome (эмуляция iPhone X)
-```bash
-.\gradlew clean test -DrunMode=selenoid -Dbrowser=chromeMobile
-```
-
-### 💻 Локальный запуск (без Selenoid)
-```bash
-.\gradlew clean test -DrunMode=local -Dbrowser=chrome
+```xml
+<qa>
+  <user name="default">
+    <limits>
+      <limit name="chrome" max="5"/>
+      <limit name="firefox" max="3"/>
+    </limits>
+  </user>
+</qa>
 ```
 
 ---
 
-## ⚙️ Параллельный запуск тестов
+# 📄 Пример `docker-compose.yml`
 
-В `build.gradle` добавлен параметр:
+```yaml
+version: '3.7'
+
+services:
+
+  ggr:
+    image: aerokube/ggr:latest
+    volumes:
+      - ./ggr:/etc/ggr
+    ports:
+      - "4444:4444"
+
+  ggr-ui:
+    image: aerokube/ggr-ui:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./ggr-ui:/etc/ggr-ui
+
+  selenoid1:
+    image: aerokube/selenoid:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./browsers:/etc/selenoid/browsers
+      - ./logs:/opt/selenoid/logs
+      - ./video:/opt/selenoid/video
+    environment:
+      - TZ=Europe/Moscow
+
+  selenoid2:
+    image: aerokube/selenoid:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./browsers:/etc/selenoid/browsers
+      - ./logs:/opt/selenoid/logs
+      - ./video:/opt/selenoid/video
+```
+
+---
+
+# 🚀 Запуск окружения
+
+```bash
+cd docker
+docker-compose up -d
+```
+
+После старта:
+
+| Компонент | URL |
+|----------|------|
+| GGR endpoint | http://localhost:4444/wd/hub |
+| GGR-UI panel | http://localhost:8888 |
+
+---
+
+# 🧪 Запуск тестов через GGR
+
+### Chrome (десктоп)
+```bash
+./gradlew clean test -DrunMode=ggr -Dbrowser=chrome
+```
+
+### Chrome Mobile
+```bash
+./gradlew clean test -DrunMode=ggr -Dbrowser=chromeMobile
+```
+
+---
+
+# 🧠 Конфигурация WebDriver (GGR)
+
+### Пример SelenoidConfig.java
+
+```java
+caps.setCapability("browserName", browser);
+caps.setCapability("enableVNC", true);
+caps.setCapability("enableVideo", true);
+
+URL ggrUrl = new URL("http://localhost:4444/wd/hub");
+return new RemoteWebDriver(ggrUrl, caps);
+```
+
+---
+
+# ⚙️ Параллельный запуск
 
 ```groovy
 test {
     useJUnitPlatform()
-    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2)
 }
 ```
 
-Это позволяет выполнять тесты параллельно (на ~половине доступных CPU ядер).
-
 ---
 
-## 🧩 Файлы конфигурации
+# 📂 Логи и видео
 
-### 📁 `docker/browsers.json`
-```json
-{
-  "chrome": {
-    "default": "122.0",
-    "versions": {
-      "122.0": { "image": "selenoid/vnc:chrome_122.0", "port": "4444" }
-    }
-  },
-  "firefox": {
-    "default": "122.0",
-    "versions": {
-      "122.0": { "image": "selenoid/vnc:firefox_122.0", "port": "4444" }
-    }
-  },
-  "opera": {
-    "default": "107.0",
-    "versions": {
-      "107.0": { "image": "selenoid/vnc:opera_107.0", "port": "4444" }
-    }
-  }
-}
+После завершения тестов:
+
 ```
-
-### 📄 `docker/deploy_selenoid.yml`
-Ansible playbook для быстрой установки и запуска окружения на сервере.
-
----
-
-## 🧰 Полезные команды Docker
-
-```bash
-docker ps                   # Проверить запущенные контейнеры
-docker logs selenoid        # Логи Selenoid
-docker logs selenoid-ui     # Логи панели управления
-docker-compose down         # Остановить контейнеры
-docker network ls           # Проверить сети Docker
+docker/logs/
+docker/video/
 ```
 
 ---
 
-## 🧠 Конфигурация SelenoidConfig.java
+# 🎯 Итог
 
-Файл `src/main/java/driver/SelenoidConfig.java`  
-поддерживает режимы:
-- `createDesktopChrome()`
-- `createChromeMobileIPhoneX()`
+В проект добавлена поддержка:
 
-Подключается к:
-```
-http://host.docker.internal:4444/wd/hub
-```
+- GGR как центрального Selenium‑роутера  
+- GGR-UI панели  
+- нескольких Selenoid‑нод  
+- распределения нагрузки  
+- корректного описания браузеров, квот и роутинга  
 
 ---
 
-## ✅ Проверка успешности
-
-```bash
-docker-compose up -d
-.\gradlew clean test -DrunMode=selenoid -Dbrowser=chrome
-```
-
-Ожидается:
-- Selenoid доступен по `http://localhost:8080`[README.md]
-- В панели видны активные сессии
-- Видео и логи сохраняются в `/docker/video` и `/docker/logs`
-
----
-
-## 📧 Обратная связь
+# 📧 Обратная связь
 
 **Автор:** Aleksandr Anosov  
-**GitHub:** [Aleksandr-A163](https://github.com/Aleksandr-A163)
+**GitHub:** https://github.com/Aleksandr-A163
