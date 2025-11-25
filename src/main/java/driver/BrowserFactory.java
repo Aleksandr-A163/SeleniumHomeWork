@@ -1,29 +1,46 @@
 package driver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class BrowserFactory {
 
-    public static WebDriver create() {
-        RunMode mode = RunMode.fromProperty();
-        BrowserType browser = BrowserType.fromProperty();
+    public WebDriver create(BrowserType browser, RunMode runMode) {
+        return switch (runMode) {
+            case LOCAL -> createLocal(browser);
+            case SELENOID, GGR -> createRemote(browser, runMode);
+        };
+    }
 
-        System.out.printf("▶ runMode=%s, browser=%s%n", mode, browser);
+    private WebDriver createLocal(BrowserType browser) {
+        switch (browser) {
+            case CHROME, CHROME_MOBILE -> {
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--remote-allow-origins=*");
+                options.addArguments("--start-maximized");
 
-        return switch (mode) {
-            case LOCAL -> browser.createLocal();
+                if (browser == BrowserType.CHROME_MOBILE) {
+                    // простая mobile-эмуляция локально, чтобы поведение совпадало
+                    options.setExperimentalOption(
+                            "mobileEmulation",
+                            java.util.Map.of("deviceName", "iPhone X")
+                    );
+                }
 
-            case SELENOID -> {
-                if (browser == BrowserType.CHROME_MOBILE)
-                    yield SelenoidConfig.createMobile(mode);
-                yield SelenoidConfig.createDesktop(mode);
+                return new ChromeDriver(options);
             }
+            default ->
+                    throw new IllegalArgumentException("Local run is not supported for: " + browser);
+        }
+    }
 
-            case GGR -> {
-                if (browser == BrowserType.CHROME_MOBILE)
-                    yield SelenoidConfig.createMobile(mode);
-                yield SelenoidConfig.createDesktop(mode);
-            }
+    private WebDriver createRemote(BrowserType browser, RunMode runMode) {
+        return switch (browser) {
+            case CHROME -> SelenoidConfig.createDesktop(runMode);
+            case CHROME_MOBILE -> SelenoidConfig.createMobile(runMode);
         };
     }
 }

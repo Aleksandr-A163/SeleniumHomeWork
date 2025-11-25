@@ -1,29 +1,37 @@
 package driver;
 
+import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.EventFiringDecorator;
-import utils.HighlightingListener;
 
 public class WebDriverProvider implements Provider<WebDriver> {
 
-    private static final ThreadLocal<WebDriver> DRIVER = new ThreadLocal<>();
+    private final BrowserFactory browserFactory;
+    private WebDriver driver;   // <-- хранение инстанса
+
+    @Inject
+    public WebDriverProvider(BrowserFactory browserFactory) {
+        this.browserFactory = browserFactory;
+    }
 
     @Override
     public WebDriver get() {
-        if (DRIVER.get() == null) {
-            WebDriver base = BrowserFactory.create();
-            WebDriver decorated = new EventFiringDecorator<>(new HighlightingListener()).decorate(base);
-            DRIVER.set(decorated);
+        if (driver == null) {
+            String browserProp = System.getProperty("browser", "chrome");
+            String runModeProp = System.getProperty("runMode", "local");
+
+            BrowserType browser = BrowserType.from(browserProp);
+            RunMode runMode = RunMode.from(runModeProp);
+
+            driver = browserFactory.create(browser, runMode);
         }
-        return DRIVER.get();
+        return driver;
     }
 
-    public static void quitDriver() {
-        WebDriver drv = DRIVER.get();
-        if (drv != null) {
-            drv.quit();
-            DRIVER.remove();
+    public void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
         }
     }
 }

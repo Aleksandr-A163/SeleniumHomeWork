@@ -4,10 +4,19 @@ services:
   selenoid-1:
     image: aerokube/selenoid:latest
     container_name: selenoid-1
+    security_opt:
+      - seccomp:unconfined     # критично для WSL2
+    shm_size: '2gb'            # расширенный /dev/shm для Chrome
+    ulimits:
+      core: -1
+      nofile:
+        soft: 262144
+        hard: 262144
     networks:
       - selenoid-net
     ports:
-      - "4444:4444"        # опционально – для отладки напрямую
+      - "4444:4444"
+    restart: always
     volumes:
       - ./browsers.json:/etc/selenoid/browsers.json:ro
       - ./logs:/opt/selenoid/logs
@@ -16,13 +25,22 @@ services:
     environment:
       - TZ=Europe/Moscow
       - OVERRIDE_VIDEO_OUTPUT_DIR=/opt/selenoid/video
+      - KEEP_SESSIONS_ON_FAILURE=true
 
   selenoid-2:
     image: aerokube/selenoid:latest
     container_name: selenoid-2
+    security_opt:
+      - seccomp:unconfined
+    shm_size: '2gb'
+    ulimits:
+      core: -1
+      nofile:
+        soft: 262144
+        hard: 262144
     networks:
       - selenoid-net
-    # порты наружу можно не публиковать – GGR ходит по внутреннему DNS
+    restart: always
     volumes:
       - ./browsers.json:/etc/selenoid/browsers.json:ro
       - ./logs:/opt/selenoid/logs
@@ -31,6 +49,7 @@ services:
     environment:
       - TZ=Europe/Moscow
       - OVERRIDE_VIDEO_OUTPUT_DIR=/opt/selenoid/video
+      - KEEP_SESSIONS_ON_FAILURE=true
 
   selenoid-ui:
     image: aerokube/selenoid-ui:latest
@@ -39,9 +58,11 @@ services:
       - selenoid-net
     depends_on:
       - selenoid-1
+    restart: always
+    command: ["--selenoid-uri", "http://selenoid-1:4444"]
     environment:
       - TZ=Europe/Moscow
-    command: ["--selenoid-uri", "http://selenoid-1:4444"]
+      - KEEP_SESSIONS_ON_FAILURE=true
     ports:
       - "8080:8080"
 
@@ -53,9 +74,9 @@ services:
     depends_on:
       - selenoid-1
       - selenoid-2
+    restart: always
     ports:
       - "4445:4444"
-    restart: always
     volumes:
       - ./config/users.htpasswd:/etc/grid-router/users.htpasswd:ro
       - ./config/quota:/etc/grid-router/quota:ro
@@ -68,12 +89,16 @@ services:
     depends_on:
       ggr:
         condition: service_started
+    restart: always
     environment:
       - GGR_HOST=ggr
       - GGR_PORT=4444
+      - KEEP_SESSIONS_ON_FAILURE=true
     ports:
       - "8888:8888"
-    restart: always
+    volumes:
+      - ./config/users.htpasswd:/etc/grid-router/users.htpasswd:ro
+      - ./config/quota:/etc/grid-router/quota:ro
 
 networks:
   selenoid-net:

@@ -29,7 +29,7 @@
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">1</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">47.653s</div>
+<div class="counter">33.925s</div>
 <p>duration</p>
 </div>
 </td>
@@ -50,8 +50,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">0%</div>
 <p>successful</p>
 </div>
 </td>
@@ -61,15 +61,168 @@
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
-<a href="#">Tests</a>
+<a href="#">Failed tests</a>
 </li>
 <li>
-<a href="#">Standard output</a>
+<a href="#">Tests</a>
 </li>
 <li>
 <a href="#">Standard error</a>
 </li>
 </ul>
+<div class="tab">
+<h2>Failed tests</h2>
+<div class="test">
+<a name="shouldVerifyEarliestAndLatestCourseDates()"></a>
+<h3 class="failures">shouldVerifyEarliestAndLatestCourseDates()</h3>
+<span class="code">
+<pre>com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+1) [Guice/ErrorInCustomProvider]: SessionNotCreatedException: Could not start a new session. Response code 500. Message: wait: http://172.17.0.4:4444/ does not respond in 30s 
+Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+Build info: version: '4.21.0', revision: '79ed462ef4'
+System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+Driver info: RemoteWebDriver
+Command: [null, newSession {capabilities=[Capabilities {acceptInsecureCerts: true, browserName: chrome, goog:chromeOptions: {args: [--no-sandbox, --disable-dev-shm-usage, --disable-gpu, --disable-notifications, --disable-infobars], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false}}]}]
+Capabilities {acceptInsecureCerts: true, browserName: chrome, goog:chromeOptions: {args: [--no-sandbox, --disable-dev-shm-usage, --disable-gpu, --disable-notifications, --disable-infobars], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false}}
+  at di.TestModule.provideWebDriver(TestModule.java:26)
+  at di.TestModule.provideCourseCatalogPage(TestModule.java:52)
+      \_ for 1st parameter
+  at di.TestModule.provideCourseCatalogPage(TestModule.java:52)
+  at ui_tests.CourseDateTest.catalog(CourseDateTest.java:19)
+      \_ for field catalog
+  while locating ui_tests.CourseDateTest
+
+Learn more:
+  https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+1 error
+
+======================
+Full classname legend:
+======================
+RemoteWebDriver:            &quot;org.openqa.selenium.remote.RemoteWebDriver&quot;
+SessionNotCreatedException: &quot;org.openqa.selenium.SessionNotCreatedException&quot;
+========================
+End of classname legend:
+========================
+
+	at app//com.google.inject.internal.InternalProvisionException.toProvisionException(InternalProvisionException.java:251)
+	at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:74)
+	at app//com.google.inject.internal.InjectorImpl.injectMembers(InjectorImpl.java:1109)
+	at app//di.GuiceExtension.beforeEach(GuiceExtension.java:17)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeEachCallbacks$2(TestMethodTestDescriptor.java:167)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeBeforeMethodsOrCallbacksUntilExceptionOccurs$6(TestMethodTestDescriptor.java:203)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeMethodsOrCallbacksUntilExceptionOccurs(TestMethodTestDescriptor.java:203)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeBeforeEachCallbacks(TestMethodTestDescriptor.java:166)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:133)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base@17.0.16/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at app//org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base@17.0.16/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base@17.0.16/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base@17.0.16/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy1/jdk.proxy1.$Proxy4.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: wait: http://172.17.0.4:4444/ does not respond in 30s 
+Host info: host: 'DESKTOP-7IJK7RJ', ip: '127.0.1.1'
+Build info: version: '4.21.0', revision: '79ed462ef4'
+System info: os.name: 'Linux', os.arch: 'amd64', os.version: '6.6.87.2-microsoft-standard-WSL2', java.version: '17.0.16'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [null, newSession {capabilities=[Capabilities {acceptInsecureCerts: true, browserName: chrome, goog:chromeOptions: {args: [--no-sandbox, --disable-dev-shm-usage, --disable-gpu, --disable-notifications, --disable-infobars], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false}}]}]
+Capabilities {acceptInsecureCerts: true, browserName: chrome, goog:chromeOptions: {args: [--no-sandbox, --disable-dev-shm-usage, --disable-gpu, --disable-notifications, --disable-infobars], extensions: []}, selenoid:options: {enableVNC: true, enableVideo: false}}
+	at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:114)
+	at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:75)
+	at app//org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:61)
+	at app//org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:162)
+	at app//org.openqa.selenium.remote.TracedCommandExecutor.execute(TracedCommandExecutor.java:51)
+	at app//org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+	at app//org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+	at app//org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:161)
+	at app//org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:141)
+	at app//driver.SelenoidConfig.createDesktop(SelenoidConfig.java:57)
+	at app//driver.BrowserFactory.createRemote(BrowserFactory.java:42)
+	at app//driver.BrowserFactory.create(BrowserFactory.java:13)
+	at app//driver.WebDriverProvider.get(WebDriverProvider.java:26)
+	at app//di.TestModule.provideWebDriver(TestModule.java:26)
+	at app//di.TestModule$$FastClassByGuice$$5b795.GUICE$TRAMPOLINE(&lt;generated&gt;)
+	at app//di.TestModule$$FastClassByGuice$$5b795.apply(&lt;generated&gt;)
+	at app//com.google.inject.internal.ProviderMethod$FastClassProviderMethod.doProvision(ProviderMethod.java:260)
+	at app//com.google.inject.internal.ProviderMethod.doProvision(ProviderMethod.java:171)
+	at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.provision(InternalProviderInstanceBindingImpl.java:185)
+	at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.get(InternalProviderInstanceBindingImpl.java:162)
+	at app//com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+	at app//com.google.inject.internal.SingletonScope$1.get(SingletonScope.java:169)
+	at app//com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:45)
+	at app//com.google.inject.internal.SingleParameterInjector.inject(SingleParameterInjector.java:40)
+	at app//com.google.inject.internal.SingleParameterInjector.getAll(SingleParameterInjector.java:60)
+	at app//com.google.inject.internal.ProviderMethod.doProvision(ProviderMethod.java:171)
+	at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.provision(InternalProviderInstanceBindingImpl.java:185)
+	at app//com.google.inject.internal.InternalProviderInstanceBindingImpl$CyclicFactory.get(InternalProviderInstanceBindingImpl.java:162)
+	at app//com.google.inject.internal.SingleFieldInjector.inject(SingleFieldInjector.java:50)
+	at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:146)
+	at app//com.google.inject.internal.MembersInjectorImpl.injectAndNotify(MembersInjectorImpl.java:101)
+	at app//com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:72)
+	... 70 more
+</pre>
+</span>
+</div>
+</div>
 <div class="tab">
 <h2>Tests</h2>
 <table>
@@ -81,142 +234,17 @@
 </tr>
 </thead>
 <tr>
-<td class="success">shouldVerifyEarliestAndLatestCourseDates()</td>
-<td class="success">47.653s</td>
-<td class="success">passed</td>
+<td class="failures">shouldVerifyEarliestAndLatestCourseDates()</td>
+<td class="failures">33.925s</td>
+<td class="failures">failed</td>
 </tr>
 </table>
 </div>
 <div class="tab">
-<h2>Standard output</h2>
-<span class="code">
-<pre>&#x1f50e; Всего найдено курсов: 14
-— 
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— AI для разработчиков
-— Unity Game Developer. Professional
-— Архитектура корпорации. Togaf 10
-— Внедрение и работа в DevSecOps
-— DevOps практики и инструменты
-— JavaScript QA Engineer
-— Дизайн сетей ЦОД
-— Machine Learning. Basic
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— 
-✅ Курс успешно найден и кликнут: Безопасность в Kubernetes
-&#x1f50e; Всего найдено курсов: 14
-— 
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— AI для разработчиков
-— Unity Game Developer. Professional
-— Архитектура корпорации. Togaf 10
-— Внедрение и работа в DevSecOps
-— DevOps практики и инструменты
-— JavaScript QA Engineer
-— Дизайн сетей ЦОД
-— Machine Learning. Basic
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— 
-✅ Курс успешно найден и кликнут: Архитектура корпорации. Togaf 10
-&#x1f50e; Всего найдено курсов: 13
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— AI для разработчиков
-— Unity Game Developer. Professional
-— Архитектура корпорации. Togaf 10
-— Внедрение и работа в DevSecOps
-— DevOps практики и инструменты
-— JavaScript QA Engineer
-— Дизайн сетей ЦОД
-— Machine Learning. Basic
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— 
-✅ Курс успешно найден и кликнут: Внедрение и работа в DevSecOps
-&#x1f50e; Всего найдено курсов: 14
-— 
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— AI для разработчиков
-— Unity Game Developer. Professional
-— Архитектура корпорации. Togaf 10
-— Внедрение и работа в DevSecOps
-— DevOps практики и инструменты
-— JavaScript QA Engineer
-— Дизайн сетей ЦОД
-— Machine Learning. Basic
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— 
-✅ Курс успешно найден и кликнут: DevOps практики и инструменты
-&#x1f50e; Всего найдено курсов: 10
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— AI для разработчиков
-— Unity Game Developer. Professional
-— Архитектура корпорации. Togaf 10
-— Внедрение и работа в DevSecOps
-— DevOps практики и инструменты
-— JavaScript QA Engineer
-— Дизайн сетей ЦОД
-— Machine Learning. Basic
-✅ Курс успешно найден и кликнут: JavaScript QA Engineer
-&#x1f50e; Всего найдено курсов: 11
-— 
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— AI для разработчиков
-— Unity Game Developer. Professional
-— Архитектура корпорации. Togaf 10
-— Внедрение и работа в DevSecOps
-— DevOps практики и инструменты
-— JavaScript QA Engineer
-— Дизайн сетей ЦОД
-— Machine Learning. Basic
-✅ Курс успешно найден и кликнут: Дизайн сетей ЦОД
-&#x1f50e; Всего найдено курсов: 11
-— 
-— Безопасность в Kubernetes
-— Разработка прикладного ПО на Qt и ОС «Аврора»
-— AI для разработчиков
-— Unity Game Developer. Professional
-— Архитектура корпорации. Togaf 10
-— Внедрение и работа в DevSecOps
-— DevOps практики и инструменты
-— JavaScript QA Engineer
-— Дизайн сетей ЦОД
-— Machine Learning. Basic
-✅ Курс успешно найден и кликнут: Machine Learning. Basic
-</pre>
-</span>
-</div>
-<div class="tab">
 <h2>Standard error</h2>
 <span class="code">
-<pre>Nov 24, 2025 10:19:50 PM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
+<pre>Nov 25, 2025 5:27:40 AM org.openqa.selenium.remote.tracing.opentelemetry.OpenTelemetryTracer createTracer
 INFO: Using OpenTelemetry for tracing
-✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
-✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
-✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
-⚠️ На странице курса отсутствует дата старта
-⚠️ Курс 'Безопасность в Kubernetes' не содержит дату старта — пропускаем
-✘ Не удалось получить дату курса &quot;&quot;: Text '' could not be parsed at index 0
-⚠️ На странице курса отсутствует дата старта
-⚠️ Курс 'Архитектура корпорации. Togaf 10' не содержит дату старта — пропускаем
-⚠️ На странице курса отсутствует дата старта
-⚠️ Курс 'Внедрение и работа в DevSecOps' не содержит дату старта — пропускаем
-⚠️ На странице курса отсутствует дата старта
-⚠️ Курс 'DevOps практики и инструменты' не содержит дату старта — пропускаем
-⚠️ На странице курса отсутствует дата старта
-⚠️ Курс 'JavaScript QA Engineer' не содержит дату старта — пропускаем
-⚠️ На странице курса отсутствует дата старта
-⚠️ Курс 'Дизайн сетей ЦОД' не содержит дату старта — пропускаем
-⚠️ На странице курса отсутствует дата старта
-⚠️ Курс 'Machine Learning. Basic' не содержит дату старта — пропускаем
 </pre>
 </span>
 </div>
@@ -228,7 +256,7 @@ INFO: Using OpenTelemetry for tracing
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14</a> at Nov 24, 2025, 10:20:39 PM</p>
+<a href="https://www.gradle.org">Gradle 8.14</a> at Nov 25, 2025, 5:28:13 AM</p>
 </div>
 </div>
 </body>
